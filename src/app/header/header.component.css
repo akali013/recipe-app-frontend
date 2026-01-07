@@ -1,0 +1,25 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-family: "Oregano";
+  background-color: #004F56;
+  padding: 0 3%;
+
+  position: sticky;
+  left: 0;
+  right: 0;
+  height: 100px;
+}
+
+.menu-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.right-section {
+  font-size: 56px; 
+  color: #81D3DE;
+}
