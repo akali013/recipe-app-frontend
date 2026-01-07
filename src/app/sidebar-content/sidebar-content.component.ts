@@ -16,7 +16,7 @@ export class SidebarContentComponent implements OnInit {
   }
 
   goToPage(page: string) {
-    this.sidebar.close();
     this.router.navigate([page]);
+    this.sidebar.toggle();
   }
 }

@@ -8,6 +8,11 @@ import { Recipe } from 'src/_models/recipe';
 export class RecipeService {
 
   constructor() { }
+
+  createRecipe(recipe: Recipe) {
+    RECIPE_DATA.push(recipe);
+    console.log(RECIPE_DATA);
+  }
 }
 
 export let RECIPE_DATA: Recipe[] = [
