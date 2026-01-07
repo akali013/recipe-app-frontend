@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { RecipeTablePageComponent } from './recipe-table-page/recipe-table-page.component';
 
 const routes: Routes = [
-  { path: "**", component: RecipeTablePageComponent }
+  { path: "recipes", component: RecipeTablePageComponent }
 ];
 
 @NgModule({
