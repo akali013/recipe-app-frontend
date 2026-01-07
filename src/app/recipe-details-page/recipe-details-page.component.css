@@ -1,0 +1,17 @@
+li {
+  font-size: 18px;
+}
+
+.details-container {
+  padding: 3%;
+}
+
+.source-container {
+  display: flex;
+  justify-content: end;
+}
+
+.source {
+  font-size: 20px;
+  font-style: italic;
+}

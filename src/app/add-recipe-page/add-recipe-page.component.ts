@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { RecipeService } from '../_services/recipe.service';
 import { Recipe } from 'src/_models/recipe';
+import { HeaderService } from '../_services/header.service';
 
 @Component({
   selector: 'app-add-recipe-page',
@@ -36,9 +37,10 @@ export class AddRecipePageComponent implements OnInit {
     return this.recipeForm.get("instructions") as FormArray;
   }
 
-  constructor(private fb: FormBuilder, private recipeService: RecipeService) { }
+  constructor(private fb: FormBuilder, private recipeService: RecipeService, private headerService: HeaderService) { }
 
   ngOnInit(): void {
+    this.headerService.setHeaderText("Add a Recipe");
   }
 
   addIngredient() {

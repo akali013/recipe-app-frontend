@@ -4,6 +4,8 @@ import { Recipe } from 'src/_models/recipe';
 import { RECIPE_DATA } from '../_services/recipe.service';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import { Router } from '@angular/router';
+import { HeaderService } from '../_services/header.service';
 
 @Component({
   selector: 'app-recipe-table-page',
@@ -18,9 +20,10 @@ export class RecipeTablePageComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor() { }
+  constructor(private router: Router, private headerService: HeaderService) { }
 
   ngOnInit(): void {
+    this.headerService.setHeaderText("My Recipes");
   }
 
   ngAfterViewInit(): void {
@@ -30,5 +33,9 @@ export class RecipeTablePageComponent implements OnInit, AfterViewInit {
 
   searchRecipes(term: string) {
     this.recipeDataSource.filter = term.trim().toLowerCase();
+  }
+
+  inspectRecipe(recipe: Recipe) {
+    this.router.navigate([`/recipes/${recipe.id}`]);
   }
 }

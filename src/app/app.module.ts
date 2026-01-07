@@ -17,6 +17,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { HeaderComponent } from './header/header.component';
 import { SidebarContentComponent } from './sidebar-content/sidebar-content.component';
 import { AddRecipePageComponent } from './add-recipe-page/add-recipe-page.component';
+import { RecipeDetailsPageComponent } from './recipe-details-page/recipe-details-page.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { AddRecipePageComponent } from './add-recipe-page/add-recipe-page.compon
     SidebarContentComponent,
     FavoritesPageComponent,
     AddRecipePageComponent,
+    RecipeDetailsPageComponent,
   ],
   imports: [
     BrowserModule,
