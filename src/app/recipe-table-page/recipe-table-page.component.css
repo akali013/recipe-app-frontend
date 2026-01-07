@@ -1,0 +1,22 @@
+th {
+  font-weight: bold;
+}
+
+td, th {
+  font-size: 18px;
+  color: white;
+}
+
+table,
+.mat-paginator {
+  background-color: #004F56;
+  color: white;
+}
+
+.recipe-table-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 3%;
+}
