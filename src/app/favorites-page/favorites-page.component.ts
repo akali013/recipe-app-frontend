@@ -4,6 +4,8 @@ import { Recipe } from 'src/_models/recipe';
 import { RECIPE_DATA } from '../_services/recipe.service';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import { Router } from '@angular/router';
+import { HeaderService } from '../_services/header.service';
 
 @Component({
   selector: 'app-favorites-page',
@@ -17,9 +19,10 @@ export class FavoritesPageComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor() { }
+  constructor(private router: Router, private headerService: HeaderService) { }
 
   ngOnInit(): void {
+    this.headerService.setHeaderText("Favorites");
   }
 
   ngAfterViewInit(): void {
@@ -29,6 +32,10 @@ export class FavoritesPageComponent implements OnInit, AfterViewInit {
 
   searchFavorites(term: string) {
     this.favoritesDataSource.filter = term.trim().toLowerCase();
+  }
+
+  inspectFavorite(recipe: Recipe) {
+    this.router.navigate([`/recipes/${recipe.id}`]);
   }
 
 }

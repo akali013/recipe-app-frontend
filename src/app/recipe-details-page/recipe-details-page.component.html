@@ -1,0 +1,21 @@
+<div class="details-container">
+  <h1>{{selectedRecipe.name}}</h1>
+
+  <div class="ingredients-section">
+    <h2>Ingredients</h2>
+    <ul class="ingredients-list">
+      <li *ngFor="let ingredient of selectedRecipe.ingredients">{{ingredient}}</li>
+    </ul>
+  </div>
+
+  <div class="instructions-section">
+    <h2>Instructions</h2>
+    <ol class="instructions-list">
+      <li *ngFor="let instruction of selectedRecipe.instructions">{{instruction}}</li>
+    </ol>
+  </div>
+
+  <div class="source-container">
+    <p class="source">Source: {{selectedRecipe.source}}</p>
+  </div>
+</div>

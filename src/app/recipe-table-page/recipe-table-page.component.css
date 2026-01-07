@@ -7,6 +7,14 @@ td, th {
   color: white;
 }
 
+td {
+  cursor: pointer;
+}
+
+td:hover {
+  color: #81D3DE;
+}
+
 table,
 .mat-paginator {
   background-color: #004F56;

@@ -21,7 +21,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
-    <tr mat-row *matRowDef="let recipes; columns: tableColumns"></tr>
+    <tr mat-row *matRowDef="let recipe; columns: tableColumns" (click)="inspectFavorite(recipe)"></tr>
   </table>
 
   <mat-paginator [pageSizeOptions]="[5, 10, 20]" aria-label="Select page of favorite recipes"></mat-paginator>

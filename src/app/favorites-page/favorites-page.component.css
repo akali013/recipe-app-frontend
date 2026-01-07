@@ -2,9 +2,18 @@ th {
   font-weight: bold;
 }
 
-td, th {
+td,
+th {
   font-size: 18px;
   color: white;
+}
+
+td {
+  cursor: pointer;
+}
+
+td:hover {
+  color: #81D3DE;
 }
 
 table,
