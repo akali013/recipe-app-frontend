@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { FavoriteRecipe } from 'src/_models/favoriteRecipe';
 import { Recipe } from 'src/_models/recipe';
 
 @Injectable({
@@ -34,4 +35,4 @@ export let RECIPE_DATA: Recipe[] = [
     instructions: ["Cook egg", "Add cheese", "Flip egg inward"],
     source: "el brain"
   },
-] 
+];
