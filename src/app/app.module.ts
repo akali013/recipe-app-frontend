@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RecipeTablePageComponent } from './recipe-table-page/recipe-table-page.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
+import { FavoritesPageComponent } from './favorites-page/favorites-page.component';
 
 // Angular Material components
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -22,6 +23,7 @@ import { SidebarContentComponent } from './sidebar-content/sidebar-content.compo
     SearchBarComponent,
     HeaderComponent,
     SidebarContentComponent,
+    FavoritesPageComponent,
   ],
   imports: [
     BrowserModule,
