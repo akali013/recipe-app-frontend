@@ -1,0 +1,32 @@
+<h1>Create Account</h1>
+
+<form class="signup-form" [formGroup]="signUpForm" (ngSubmit)="createAccount()">
+  <div class="form-input-container">
+    <label for="username-input">
+      Username:
+    </label>
+    <input id="username-input" class="form-input" type="text" placeholder="Enter username here..." formControlName="username" required />
+  </div>
+
+  <div class="form-input-container">
+    <label for="password-input">
+      Password:
+    </label>
+    <input id="password-input" class="form-input" type="text" placeholder="Enter password here..." formControlName="password" required />
+  </div>
+
+  <div class="form-input-container">
+    <label for="retype-password-input">
+      Retype Password:
+    </label>
+    <input id="retype-password-input" class="form-input" type="text" placeholder="Retype your password..." formControlName="retypePassword" required />
+  </div>
+
+  <button class="create-account-button" type="submit">
+    Create Account
+  </button>
+
+  <button class="back-to-login-button" type="button">
+    Back to Login
+  </button>
+</form>

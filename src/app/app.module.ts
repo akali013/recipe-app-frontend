@@ -19,6 +19,8 @@ import { SidebarContentComponent } from './sidebar-content/sidebar-content.compo
 import { AddRecipePageComponent } from './add-recipe-page/add-recipe-page.component';
 import { RecipeDetailsPageComponent } from './recipe-details-page/recipe-details-page.component';
 import { SettingsPageComponent } from './settings-page/settings-page.component';
+import { LoginPageComponent } from './login-page/login-page.component';
+import { SignupPageComponent } from './signup-page/signup-page.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,8 @@ import { SettingsPageComponent } from './settings-page/settings-page.component';
     AddRecipePageComponent,
     RecipeDetailsPageComponent,
     SettingsPageComponent,
+    LoginPageComponent,
+    SignupPageComponent,
   ],
   imports: [
     BrowserModule,
