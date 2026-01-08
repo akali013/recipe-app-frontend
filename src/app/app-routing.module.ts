@@ -4,12 +4,14 @@ import { RecipeTablePageComponent } from './recipe-table-page/recipe-table-page.
 import { FavoritesPageComponent } from './favorites-page/favorites-page.component';
 import { AddRecipePageComponent } from './add-recipe-page/add-recipe-page.component';
 import { RecipeDetailsPageComponent } from './recipe-details-page/recipe-details-page.component';
+import { SettingsPageComponent } from './settings-page/settings-page.component';
 
 const routes: Routes = [
   { path: "recipes", component: RecipeTablePageComponent },
   { path: "recipes/:id", component: RecipeDetailsPageComponent },
   { path: "favorites", component: FavoritesPageComponent },
   { path: "add-recipe", component: AddRecipePageComponent },
+  { path: "settings", component: SettingsPageComponent },
   { path: "**", redirectTo: "recipes", pathMatch: "full" }
 ];
 
