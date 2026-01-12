@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from "@angular/common/http";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +22,7 @@ import { RecipeDetailsPageComponent } from './recipe-details-page/recipe-details
 import { SettingsPageComponent } from './settings-page/settings-page.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { SignupPageComponent } from './signup-page/signup-page.component';
+
 
 @NgModule({
   declarations: [
@@ -44,7 +46,8 @@ import { SignupPageComponent } from './signup-page/signup-page.component';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-    MatSidenavModule
+    MatSidenavModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

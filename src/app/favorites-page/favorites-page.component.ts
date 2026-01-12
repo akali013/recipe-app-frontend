@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Recipe } from 'src/_models/recipe';
-import { RECIPE_DATA } from '../_services/recipe.service';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
@@ -14,7 +13,7 @@ import { HeaderService } from '../_services/header.service';
 })
 export class FavoritesPageComponent implements OnInit, AfterViewInit {
   tableColumns = ["name", "type", "remove"];
-  favoritesDataSource: MatTableDataSource<Recipe> = new MatTableDataSource(RECIPE_DATA);
+  favoritesDataSource: MatTableDataSource<Recipe> = new MatTableDataSource([] as Recipe[]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
