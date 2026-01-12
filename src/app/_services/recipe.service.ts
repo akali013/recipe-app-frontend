@@ -1,43 +1,54 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FavoriteRecipe } from 'src/_models/favoriteRecipe';
+import { catchError, Observable, of, tap } from 'rxjs';
 import { Recipe } from 'src/_models/recipe';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecipeService {
+  apiUrl = environment.apiUrl + "/recipes/";
+  headers = new HttpHeaders({
+    "Content-Type": "application/json"
+  });
+  // Default recipe if an error is returned by the API
+  errorRecipe: Recipe = {
+    id: "0",
+    name: "N/A",
+    type: "",
+    source: "",
+    imageUrl: "",
+    instructions: [],
+    ingredients: []
+  };
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
+
+  getRecipes(): Observable<Recipe[]> {
+    return this.http.get<Recipe[]>(this.apiUrl).pipe(
+      catchError(this.handleError<Recipe[]>("getRecipes", []))
+    );
+  }
+
+  getRecipeById(id: string): Observable<Recipe> {
+    return this.http.get<Recipe>(this.apiUrl + id).pipe(
+      catchError(this.handleError<Recipe>("getRecipeById", this.errorRecipe))
+    );
+  }
 
   createRecipe(recipe: Recipe) {
-    RECIPE_DATA.push(recipe);
-    console.log(RECIPE_DATA);
+    
+  }
+
+  // Source: https://v14.angular.io/tutorial/toh-pt6
+  // Handles errors from any calls made to the API
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(`${operation} failed: ${error.message}`);
+
+      // Let the app keep running by returning a given result.
+      return of(result as T);
+    };
   }
 }
-
-export let RECIPE_DATA: Recipe[] = [
-  {
-    id: "1",
-    name: "Avocado Toast",
-    type: "Breakfast",
-    ingredients: ["Bread", "Avocado", "Black Pepper"],
-    instructions: ["Cut bread", "Spread avocado", "Drop pepper"],
-    source: "el brain"
-  },
-  {
-    id: "2",
-    name: "Spaghetti and Meatballs",
-    type: "Lunch",
-    ingredients: ["Spaghetti", "Meatballs", "Tomato sauce"],
-    instructions: ["Boil spaghetti", "Cook meatballs", "Add sauce"],
-    source: "el brain"
-  },
-  {
-    id: "3",
-    name: "Omelette",
-    type: "Breakfast",
-    ingredients: ["Eggs", "Cheese"],
-    instructions: ["Cook egg", "Add cheese", "Flip egg inward"],
-    source: "el brain"
-  },
-];

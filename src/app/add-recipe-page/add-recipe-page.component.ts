@@ -66,7 +66,8 @@ export class AddRecipePageComponent implements OnInit {
       type: this.type.value,
       ingredients: this.ingredients.value,
       instructions: this.instructions.value,
-      source: "You"
+      source: "You",
+      imageUrl: ""
     };
 
     this.recipeService.createRecipe(newRecipe);

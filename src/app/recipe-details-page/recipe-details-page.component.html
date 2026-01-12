@@ -11,11 +11,11 @@
   <div class="instructions-section">
     <h2>Instructions</h2>
     <ol class="instructions-list">
-      <li *ngFor="let instruction of selectedRecipe.instructions">{{instruction}}</li>
+      <li *ngFor="let instruction of selectedRecipe.instructions">{{instruction}}.</li>
     </ol>
   </div>
 
   <div class="source-container">
-    <p class="source">Source: {{selectedRecipe.source}}</p>
+    <p class="source" *ngIf="selectedRecipe.source !== null">Source: {{selectedRecipe.source}}</p>
   </div>
 </div>

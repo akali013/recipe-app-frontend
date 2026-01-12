@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Recipe } from 'src/_models/recipe';
-import { RECIPE_DATA } from '../_services/recipe.service';
 import { HeaderService } from '../_services/header.service';
+import { RecipeService } from '../_services/recipe.service';
 
 @Component({
   selector: 'app-recipe-details-page',
@@ -12,7 +12,7 @@ import { HeaderService } from '../_services/header.service';
 export class RecipeDetailsPageComponent implements OnInit {
   selectedRecipe!: Recipe;
 
-  constructor(private route: ActivatedRoute, private headerService: HeaderService) { }
+  constructor(private route: ActivatedRoute, private headerService: HeaderService, private recipeService: RecipeService) { }
 
   ngOnInit(): void {
     this.getRecipe();
@@ -20,8 +20,9 @@ export class RecipeDetailsPageComponent implements OnInit {
   }
 
   getRecipe() {
-    const id = this.route.snapshot.paramMap.get("id");
-    this.selectedRecipe = RECIPE_DATA.find(r => r.id === id)!;
+    const id = this.route.snapshot.paramMap.get("id")!;
+    
+    this.recipeService.getRecipeById(id).subscribe(recipe => this.selectedRecipe = recipe);
   }
 
 }
