@@ -14,6 +14,7 @@ export class RecipeDetailsPageComponent implements OnInit {
   selectedRecipe!: Recipe;
   recipeImageUrl: SafeUrl | string = "";
   imageSource = "";
+  stepIndex = 0;    // Marks the instruction step the user is currently on
 
   constructor(private route: ActivatedRoute, private headerService: HeaderService, private recipeService: RecipeService, private sanitizer: DomSanitizer) { }
 
@@ -39,4 +40,11 @@ export class RecipeDetailsPageComponent implements OnInit {
     });
   }
 
+  previousStep() {
+    this.stepIndex - 1 > -1 ? this.stepIndex-- : this.stepIndex = this.selectedRecipe.instructions.length - 1;
+  }
+
+  nextStep() {
+    this.stepIndex + 1 < this.selectedRecipe.instructions.length ? this.stepIndex++ : this.stepIndex = 0;
+  }
 }
