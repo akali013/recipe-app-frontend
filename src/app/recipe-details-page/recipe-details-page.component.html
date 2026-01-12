@@ -1,4 +1,9 @@
 <div class="details-container">
+  <div class="recipe-image-container">
+    <img class="recipe-image" [src]="recipeImageUrl" alt="Image of food" />
+    <sub>Source: {{imageSource}}</sub>
+  </div>
+
   <h1>{{selectedRecipe.name}}</h1>
 
   <div class="ingredients-section">

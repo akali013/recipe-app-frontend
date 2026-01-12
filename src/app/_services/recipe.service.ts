@@ -37,8 +37,10 @@ export class RecipeService {
     );
   }
 
-  createRecipe(recipe: Recipe) {
-    
+  createRecipe(recipe: Recipe): Observable<Recipe> {
+    return this.http.post<Recipe>(this.apiUrl, recipe, {headers: this.headers}).pipe(
+      catchError(this.handleError("createRecipe", this.errorRecipe))
+    );
   }
 
   // Source: https://v14.angular.io/tutorial/toh-pt6

@@ -21,6 +21,15 @@
         <option value="Dessert">Dessert</option>
       </select>
     </div>
+
+    <div class="form-input-container">
+      <label class="recipe-image-label" for="recipe-image-input">
+        Choose Recipe Image
+      </label>
+      <input type="file" id="recipe-image-input" accept="image/*" (change)="loadImagePreview($event)" />
+    </div>
+
+    <img *ngIf="previewUrl" class="recipe-image-preview" [src]="previewUrl" />
   </div>
 
   <h1>Ingredients</h1>
