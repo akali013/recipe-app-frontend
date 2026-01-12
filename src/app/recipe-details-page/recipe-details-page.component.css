@@ -18,6 +18,50 @@ li {
   margin-bottom: 10px;
 }
 
+.step-tracker-container {
+  display: flex;
+  align-items: center;
+}
+
+.step-button {
+  border: none;
+  border-radius: 50%;
+  background-color: #324B4E;
+  color: white;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  margin-left: 15px;
+
+  display: flex;
+  justify-content: center;
+
+  position: relative;
+}
+
+.button-tooltip {
+  position: absolute;
+  bottom: -65%;
+  white-space: nowrap;
+  background-color: #00363C;
+  color: white;
+  padding: 2px 5px;
+  font-family: "Hanken Grotesk";
+  font-size: 16px;
+
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.current-step {
+  font-weight: bold;
+  font-size: 22px;
+}
+
+.step-button:hover .button-tooltip {
+  opacity: 1;
+}
+
 .source-container {
   display: flex;
   justify-content: end;

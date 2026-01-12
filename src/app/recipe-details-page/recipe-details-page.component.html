@@ -14,9 +14,28 @@
   </div>
 
   <div class="instructions-section">
-    <h2>Instructions</h2>
+    <div class="step-tracker-container">
+      <h2>Instructions</h2>
+
+      <button class="step-button" (click)="previousStep()">
+        <img src="../../assets/previous.png" />
+
+        <div class="button-tooltip">
+          Previous Step
+        </div>
+      </button>
+
+      <button class="step-button" (click)="nextStep()">
+        <img src="../../assets/next.png" />
+
+        <div class="button-tooltip">
+          Next Step
+        </div>
+      </button>
+    </div>
+
     <ol class="instructions-list">
-      <li *ngFor="let instruction of selectedRecipe.instructions">{{instruction}}.</li>
+      <li *ngFor="let instruction of selectedRecipe.instructions;let i=index" [class.current-step]="i === stepIndex">{{instruction}}.</li>
     </ol>
   </div>
 
