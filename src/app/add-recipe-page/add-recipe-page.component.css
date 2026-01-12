@@ -27,7 +27,27 @@ button {
 .general-info-section {
   display: flex;
   justify-content: space-evenly;
-  margin-bottom: 5vh;
+  margin-bottom: 2vh;
+}
+
+.recipe-image-label {
+  border: none;
+  border-radius: 50px;
+  background-color: #324B4E;
+  color: white;
+  font-size: 22px;
+  padding: 20px;
+  cursor: pointer;
+  margin-top: 3vh;
+}
+
+#recipe-image-input {
+  opacity: 0;
+}
+
+.recipe-image-preview {
+  width: 15%;
+  object-fit: contain;
 }
 
 .ingredients-section {
@@ -50,8 +70,9 @@ button {
 }
 
 #recipe-name-input {
-  width: 50vw;
+  width: 40vw;
 }
+
 .removable-input-container {
   display: flex;
   justify-content: space-between;
