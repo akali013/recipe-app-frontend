@@ -1,0 +1,51 @@
+<div class="settings-page-container">
+  <h1>Credentials</h1>
+
+  <div class="input-container">
+    <label for="email-input">
+      Email:
+    </label>
+    <div class="editable-input-container">
+      <input id="email-input" class="settings-input" type="text" placeholder="Email" [formControl]="email" />
+      <button class="edit-button" (click)="this.editingState = 'editingEmail'">
+        <img class="edit-image" src="../../assets/edit.png" />
+      </button>
+    </div>
+
+    <div class="buttons-container" *ngIf="this.editingState === 'editingEmail'">
+      <button class="cancel-button" (click)="this.editingState = 'viewing';">
+        Cancel
+      </button>
+      <button class="save-button" (click)="updateEmail()">
+        Save
+      </button>
+    </div>
+  </div>
+
+  <div class="input-container">
+    <label for="password-input">
+      Password:
+    </label>
+    <div class="editable-input-container">
+      <input id="password-input" class="settings-input" type="password" placeholder="New password" [formControl]="password" />
+      <button class="edit-button" (click)="this.editingState = 'editingPassword'">
+        <img class="edit-image" src="../../assets/edit.png" />
+      </button>
+    </div>
+    
+    <div class="buttons-container" *ngIf="this.editingState === 'editingPassword'">
+      <button class="cancel-button" (click)="this.editingState = 'viewing'">
+        Cancel
+      </button>
+      <button class="save-button" (click)="updatePassword()">
+        Save
+      </button>
+    </div>
+  </div>
+
+  <div class="logout-button-container" (click)="logOut()">
+    <button class="logout-button">
+      Log Out
+    </button>
+  </div>
+</div>
