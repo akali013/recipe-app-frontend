@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of, tap } from 'rxjs';
-import { Recipe } from 'src/_models/recipe';
+import { Recipe } from 'src/app/_models/recipe';
 import { environment } from 'src/environments/environment';
 
 @Injectable({

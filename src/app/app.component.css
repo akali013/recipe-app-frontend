@@ -1,9 +1,0 @@
-mat-sidenav {
-  width: 250px;
-  background-color: #324B4E;
-}
-
-mat-sidenav-content {
-  height: calc(100vh - 100px);
-  background-color: #81D3DE;
-}

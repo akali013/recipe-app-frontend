@@ -1,0 +1,11 @@
+<app-header [sidebar]="sidebar"></app-header>
+
+<mat-sidenav-container>
+  <mat-sidenav #sidebar>
+    <app-sidebar-content [sidebar]="sidebar"></app-sidebar-content>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

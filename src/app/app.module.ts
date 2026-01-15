@@ -1,55 +1,43 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from "@angular/common/http";
-
 import { AppRoutingModule } from './app-routing.module';
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { UserModule } from './user/user.module';
+
+import { appInitializer } from './_helpers/app.initializer';
+import { JwtInterceptor } from './_helpers/jwt.interceptor';
+import { ErrorInterceptor } from './_helpers/error.interceptor';
+
 import { AppComponent } from './app.component';
-import { RecipeTablePageComponent } from './recipe-table-page/recipe-table-page.component';
-import { SearchBarComponent } from './search-bar/search-bar.component';
-import { FavoritesPageComponent } from './favorites-page/favorites-page.component';
+import { LoginPageComponent } from './_components/login-page/login-page.component';
+import { SignupPageComponent } from './_components/signup-page/signup-page.component';
+
+import { AccountService } from './_services/account.service';
 
 // Angular Material components
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatTableModule } from '@angular/material/table';
-import { MatSortModule } from '@angular/material/sort';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { HeaderComponent } from './header/header.component';
-import { SidebarContentComponent } from './sidebar-content/sidebar-content.component';
-import { AddRecipePageComponent } from './add-recipe-page/add-recipe-page.component';
-import { RecipeDetailsPageComponent } from './recipe-details-page/recipe-details-page.component';
-import { SettingsPageComponent } from './settings-page/settings-page.component';
-import { LoginPageComponent } from './login-page/login-page.component';
-import { SignupPageComponent } from './signup-page/signup-page.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    RecipeTablePageComponent,
-    SearchBarComponent,
-    HeaderComponent,
-    SidebarContentComponent,
-    FavoritesPageComponent,
-    AddRecipePageComponent,
-    RecipeDetailsPageComponent,
-    SettingsPageComponent,
     LoginPageComponent,
     SignupPageComponent,
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
-    MatTableModule,
-    MatSortModule,
-    MatPaginatorModule,
-    MatSidenavModule,
-    HttpClientModule
+    HttpClientModule,
+    UserModule
   ],
-  providers: [],
+  providers: [
+    { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AccountService] },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
