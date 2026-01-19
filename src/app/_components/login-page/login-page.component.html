@@ -2,18 +2,18 @@
   <h1>Login</h1>
   
   <div class="form-input-container">
-    <label for="email-input">
+    <label for="email-input-s">
       Email:
     </label>
-    <input id="email-input" class="form-input" type="text" placeholder="Email..." formControlName="email"
+    <input id="email-input-s" class="form-input" type="text" placeholder="Email..." formControlName="email"
       required />
   </div>
 
   <div class="form-input-container">
-    <label for="password-input">
+    <label for="password-input-s">
       Password:
     </label>
-    <input id="password-input" class="form-input" type="password" placeholder="Password..." formControlName="password"
+    <input id="password-input-s" class="form-input" type="password" placeholder="Password..." formControlName="password"
       required />
   </div>
 
@@ -21,7 +21,7 @@
     Log In
   </button>
 
-  <button class="signup-button" type="button">
+  <button class="signup-button" type="button" routerLink="/signup">
     Create Account
   </button>
 </form>

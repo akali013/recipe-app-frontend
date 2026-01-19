@@ -5,4 +5,5 @@ export class Account {
   email?: string;
   role?: Role;
   jwtToken?: string;
+  isBanned?: boolean;
 }

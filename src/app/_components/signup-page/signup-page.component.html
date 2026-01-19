@@ -1,32 +1,32 @@
-<h1>Create Account</h1>
-
 <form class="signup-form" [formGroup]="signUpForm" (ngSubmit)="createAccount()">
+  <h1>Create Account</h1>
+
   <div class="form-input-container">
-    <label for="email-input">
+    <label for="email-input-s">
       Email:
     </label>
-    <input id="email-input" class="form-input" type="text" placeholder="Enter email here..." formControlName="email" required />
+    <input id="email-input-s" class="form-input" type="text" placeholder="Enter email here..." formControlName="email" required />
   </div>
 
   <div class="form-input-container">
-    <label for="password-input">
+    <label for="password-input-s">
       Password:
     </label>
-    <input id="password-input" class="form-input" type="text" placeholder="Enter password here..." formControlName="password" required />
+    <input id="password-input-s" class="form-input" type="password" placeholder="Enter password here..." formControlName="password" required />
   </div>
 
   <div class="form-input-container">
-    <label for="retype-password-input">
+    <label for="retype-password-input-s">
       Retype Password:
     </label>
-    <input id="retype-password-input" class="form-input" type="text" placeholder="Retype your password..." formControlName="retypePassword" required />
+    <input id="retype-password-input-s" class="form-input" type="password" placeholder="Retype your password..." formControlName="retypePassword" required />
   </div>
 
   <button class="create-account-button" type="submit">
     Create Account
   </button>
 
-  <button class="back-to-login-button" type="button">
+  <button class="back-to-login-button" type="button" routerLink="/login">
     Back to Login
   </button>
 </form>

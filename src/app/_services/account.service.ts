@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, finalize, map, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Account } from 'src/app/_models/account';
+import { Role } from '../_models/role';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +35,7 @@ export class AccountService {
   }
 
   logout() {
-    this.http.post<any>(`${this.apiUrl}/logout`, {}, { withCredentials: true, headers: this.headers }).pipe(
+    this.http.post<any>(`${this.apiUrl}/revoke-token`, {}, { withCredentials: true, headers: this.headers }).pipe(
       catchError(this.handleError("logout", new Account()))
     ).subscribe();
     this.stopRefreshTokenTimer();
@@ -53,38 +54,14 @@ export class AccountService {
     );
   }
 
-  createAccount(account: Account): Observable<Account> {
-    return this.http.post<Account>(`${this.apiUrl}/register`, account, { headers: this.headers }).pipe(
+  register(email: string, password: string, confirmPassword: string): Observable<Account> {
+    return this.http.post<Account>(`${this.apiUrl}/register`, { email, password, confirmPassword }, { headers: this.headers }).pipe(
       catchError(this.handleError("createAccount", new Account()))
     );
   }
 
-  verifyEmail(token: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/verify-email`, { token }, { headers: this.headers }).pipe(
-      catchError(this.handleError("verifyEmail"))
-    );
-  }
-
-  forgotPassword(email: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/forgot-password`, { email }, { headers: this.headers }).pipe(
-      catchError(this.handleError("forgotPassword"))
-    );
-  }
-
-  validateResetToken(token: string) {
-    return this.http.post(`${this.apiUrl}/validate-reset-token`, { token }, { headers: this.headers }).pipe(
-      catchError(this.handleError("validateResetToken"))
-    );
-  }
-
-  resetPassword(token: string, password: string, confirmPassword: string) {
-    return this.http.post(`${this.apiUrl}/reset-password`, { token, password, confirmPassword }, { headers: this.headers }).pipe(
-      catchError(this.handleError("resetPassword"))
-    );
-  }
-
   getAllAccounts(): Observable<Account[]> {
-    return this.http.get<Account[]>(`${this.apiUrl}`).pipe(
+    return this.http.get<Account[]>(this.apiUrl).pipe(
       catchError(this.handleError("getAllAccounts", [new Account()]))
     );
   }
@@ -95,8 +72,14 @@ export class AccountService {
     );
   }
 
-  updateAccount(id: string, account: Account): Observable<Account> {
-    return this.http.put<Account>(`${this.apiUrl}/${id}`, { account }, { headers: this.headers }).pipe(
+  createAccount(email: string, password: string, confirmPassword: string, role: Role): Observable<Account> {
+    return this.http.post<Account>(this.apiUrl, { email, password, confirmPassword, role }, { headers: this.headers }).pipe(
+      catchError(this.handleError("createAccount", new Account()))
+    );
+  }
+
+  updateAccount(id: string, updatedInfo = {}): Observable<Account> {
+    return this.http.put<Account>(`${this.apiUrl}/${id}`, updatedInfo, { headers: this.headers }).pipe(
       map(account => {
         // Update the current account if it was updated
         if (account.id === this.accountValue?.id) {
@@ -110,15 +93,21 @@ export class AccountService {
     );
   }
 
-  banAccount(id: string): Observable<Account> {
+  changeAccountBanStatus(id: string, banStatus: boolean): Observable<Account> {
+    return this.http.put<Account>(`${this.apiUrl}/${id}`, { IsBanned: banStatus }, { headers: this.headers }).pipe(
+      catchError(this.handleError("banAccount", new Account()))
+    );
+  }
+
+  deleteAccount(id: string): Observable<Account> {
     return this.http.delete<Account>(`${this.apiUrl}/${id}`).pipe(
       finalize(() => {
-        // Log out the user if they are banned
+        // Log out the user if they are deleted
         if (this.accountValue?.id === id) {
           this.logout();
         }
       }),
-      catchError(this.handleError("banAccount", new Account()))
+      catchError(this.handleError("deleteAccount", new Account()))
     );
   }
 

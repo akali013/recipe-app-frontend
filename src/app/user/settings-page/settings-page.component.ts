@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HeaderService } from '../../_services/header.service';
 import { FormControl, Validators } from '@angular/forms';
+import { AccountService } from 'src/app/_services/account.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-settings-page',
@@ -8,27 +10,67 @@ import { FormControl, Validators } from '@angular/forms';
   styleUrls: ['./settings-page.component.css']
 })
 export class SettingsPageComponent implements OnInit {
-  email = new FormControl("", Validators.required);
+  email = new FormControl(this.accountService.accountValue?.email, Validators.required);
   password = new FormControl("", Validators.required);
-  editingState = "viewing";
+  confirmPassword = new FormControl("", Validators.required);
+  public editingState: BehaviorSubject<string> = new BehaviorSubject("viewing");
 
-  constructor(private headerService: HeaderService) { }
+  constructor(private headerService: HeaderService, private accountService: AccountService) { }
 
   ngOnInit(): void {
     this.headerService.setHeaderText("Settings");
+    this.editingState.subscribe((state) => this.toggleInputs(state));
   }
 
   updateEmail() {
-    console.log(this.email.value);
-    this.editingState = "viewing";
+    if (this.email.value === "") {
+      return;
+    }
+
+    const updateObject = {
+      email: this.email.value
+    };
+
+    this.accountService.updateAccount(this.accountService.accountValue?.id!, updateObject).subscribe(() => console.log("updated email"));
+    this.editingState.next("viewing");
   }
 
   updatePassword() {
-    console.log(this.password.value);
-    this.editingState = "viewing";
+    if (this.password.value !== this.confirmPassword.value) {
+      return;
+    }
+
+    const updateObject = {
+      email: this.accountService.accountValue?.email,
+      password: this.password.value,
+      confirmPassword: this.confirmPassword.value
+    };
+
+    this.accountService.updateAccount(this.accountService.accountValue?.id!, updateObject).subscribe(() => console.log("updated info"));
+    this.editingState.next("viewing");
   }
 
   logOut() {
-    console.log("logged out");
+    this.accountService.logout();
+  }
+
+  private toggleInputs(state: string) {
+    switch (state) {
+      case "viewing":
+        this.email.disable();
+        this.password.disable();
+        this.confirmPassword.disable();
+        break;
+      case "editingEmail":
+        this.email.enable();
+        this.password.disable();
+        this.confirmPassword.disable();
+        break;
+      case "editingPassword":
+        this.email.disable();
+        this.password.enable();
+        this.confirmPassword.enable();
+        break;
+    }
   }
 }

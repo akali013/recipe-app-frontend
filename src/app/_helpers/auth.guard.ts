@@ -14,7 +14,7 @@ export class AuthGuard implements CanActivate {
       // Check if the route is role-restricted
       if (route.data["roles"] && !route.data["roles"].includes(account.role)) {
         // Redirect to the recipes table if the role is unauthorized
-        this.router.navigate(["/recipes"]);
+        this.router.navigate(["/user/recipes"]);
         return false;
       }
 
