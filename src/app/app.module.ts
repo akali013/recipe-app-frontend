@@ -10,13 +10,14 @@ import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { ErrorInterceptor } from './_helpers/error.interceptor';
 
 import { AppComponent } from './app.component';
-import { LoginPageComponent } from './_components/login-page/login-page.component';
-import { SignupPageComponent } from './_components/signup-page/signup-page.component';
+import { LoginPageComponent } from './_general-pages/login-page/login-page.component';
+import { SignupPageComponent } from './_general-pages/signup-page/signup-page.component';
 
 import { AccountService } from './_services/account.service';
 
 // Angular Material components
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SettingsPageComponent } from './_general-pages/settings-page/settings-page.component';
 
 
 @NgModule({

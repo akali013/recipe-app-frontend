@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, of, tap } from 'rxjs';
 import { Recipe } from 'src/app/_models/recipe';
 import { environment } from 'src/environments/environment';
+import { AccountService } from './account.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecipeService {
-  apiUrl = environment.apiUrl + "/recipes/";
+  apiUrl = environment.apiUrl + "/recipes";
   headers = new HttpHeaders({
     "Content-Type": "application/json"
   });
@@ -23,7 +24,7 @@ export class RecipeService {
     ingredients: []
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private accountService: AccountService) { }
 
   getRecipes(): Observable<Recipe[]> {
     return this.http.get<Recipe[]>(this.apiUrl).pipe(
@@ -32,14 +33,30 @@ export class RecipeService {
   }
 
   getRecipeById(id: string): Observable<Recipe> {
-    return this.http.get<Recipe>(this.apiUrl + id).pipe(
+    return this.http.get<Recipe>(`${this.apiUrl}/${id}`).pipe(
       catchError(this.handleError<Recipe>("getRecipeById", this.errorRecipe))
     );
   }
 
   createRecipe(recipe: Recipe): Observable<Recipe> {
-    return this.http.post<Recipe>(this.apiUrl, recipe, {headers: this.headers}).pipe(
+    const id = this.accountService.accountValue?.id;
+    const createRequestObj = {
+      "Name": recipe.name,
+      "Type": recipe.type,
+      "Ingredients": recipe.ingredients,
+      "Instructions": recipe.instructions,
+      "ImageUrl": recipe.imageUrl,
+      "UserId": id
+    };
+
+    return this.http.post<Recipe>(this.apiUrl, createRequestObj, { headers: this.headers }).pipe(
       catchError(this.handleError("createRecipe", this.errorRecipe))
+    );
+  }
+
+  deleteRecipe(recipe: Recipe): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/${recipe.id}`, { headers: this.headers }).pipe(
+      catchError(this.handleError("deleteRecipe"))
     );
   }
 

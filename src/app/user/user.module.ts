@@ -7,9 +7,10 @@ import { AddRecipePageComponent } from './add-recipe-page/add-recipe-page.compon
 import { FavoritesPageComponent } from './favorites-page/favorites-page.component';
 import { RecipeDetailsPageComponent } from './recipe-details-page/recipe-details-page.component';
 import { RecipeTablePageComponent } from './recipe-table-page/recipe-table-page.component';
-import { SettingsPageComponent } from './settings-page/settings-page.component';
 import { SidebarContentComponent } from './sidebar-content/sidebar-content.component';
 import { UserLayoutComponent } from './user-layout/user-layout.component';
+
+// Standalone components
 import { SearchBarComponent } from '../_components/search-bar/search-bar.component';
 import { HeaderComponent } from '../_components/header/header.component';
 
@@ -18,6 +19,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { SettingsPageComponent } from '../_general-pages/settings-page/settings-page.component';
 
 @NgModule({
   declarations: [
@@ -25,11 +27,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     FavoritesPageComponent,
     RecipeDetailsPageComponent,
     RecipeTablePageComponent,
-    SettingsPageComponent,
     SidebarContentComponent,
     UserLayoutComponent,
-    SearchBarComponent,
-    HeaderComponent
   ],
   imports: [
     CommonModule,
@@ -40,6 +39,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatSortModule,
     MatPaginatorModule,
     MatSidenavModule,
+    SearchBarComponent,
+    HeaderComponent,
+    SettingsPageComponent
   ],
   exports: [
     UserLayoutComponent

@@ -1,0 +1,57 @@
+th {
+  font-weight: bold;
+}
+
+td, th {
+  font-size: 18px;
+  color: white;
+}
+
+td {
+  cursor: pointer;
+}
+
+td:hover {
+  color: #81D3DE;
+}
+
+table,
+.mat-paginator {
+  background-color: #004F56;
+  color: white;
+}
+
+.recipe-table-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 3%;
+}
+
+.mat-column-name {
+  width: 30%;
+}
+
+.mat-column-author {
+  width: 40%;
+}
+
+.mat-column-delete {
+  width: 10%;
+}
+
+.recipe-source {
+  color: white;
+}
+
+.delete-button {
+  background-color: transparent;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+
+.delete-image {
+  width: 80%;
+}

@@ -47,4 +47,17 @@ export class RecipeDetailsPageComponent implements OnInit {
   nextStep() {
     this.stepIndex + 1 < this.selectedRecipe.instructions.length ? this.stepIndex++ : this.stepIndex = 0;
   }
+
+  // Determine if the recipe source is missing, a url (API url), or a Guid (User)
+  getRecipeSourceText(): string {
+    if (this.selectedRecipe.source && this.selectedRecipe.source.includes("http") && this.selectedRecipe.source.includes("-")) {
+      return this.selectedRecipe.source;
+    }
+
+    if (this.selectedRecipe.source && this.selectedRecipe.source.includes("-")) {
+      return "MyRecipes User";
+    }
+
+    return this.selectedRecipe.source;
+  }
 }
