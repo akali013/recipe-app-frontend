@@ -40,6 +40,6 @@
   </div>
 
   <div class="source-container">
-    <p class="source" *ngIf="selectedRecipe.source !== null">Source: {{selectedRecipe.source}}</p>
+    <p class="source" *ngIf="selectedRecipe.source">Source: {{getRecipeSourceText()}}</p>
   </div>
 </div>

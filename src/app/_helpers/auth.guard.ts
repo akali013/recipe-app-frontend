@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AccountService } from '../_services/account.service';
+import { Role } from '../_models/role';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class AuthGuard implements CanActivate {
       // Check if the route is role-restricted
       if (route.data["roles"] && !route.data["roles"].includes(account.role)) {
         // Redirect to the recipes table if the role is unauthorized
-        this.router.navigate(["/user/recipes"]);
+        account.role === Role.Admin ? this.router.navigate(["admin/recipes"]) : this.router.navigate(["/user/recipes"]);
         return false;
       }
 

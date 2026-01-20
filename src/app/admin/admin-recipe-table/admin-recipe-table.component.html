@@ -1,0 +1,38 @@
+<div class="recipe-table-container">
+  <app-search-bar (searchEvent)="searchRecipes($event)"></app-search-bar>
+
+  <table mat-table [dataSource]="recipeDataSource" matSort aria-label="table">
+    <!-- Recipe name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Recipe</th>
+      <td mat-cell *matCellDef="let recipe">{{recipe.name}}</td>
+    </ng-container>
+
+    <!-- Author column -->
+    <ng-container matColumnDef="author">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Author</th>
+      <td mat-cell *matCellDef="let recipe">
+        <p class="recipe-source" *ngIf="getAuthorType(recipe) == 'N/A'">N/A</p>
+        <a class="recipe-source" *ngIf="getAuthorType(recipe) == 'Link'" href="{{recipe.source}}">
+          {{recipe.source}}
+        </a>
+        <p class="recipe-source" *ngIf="getAuthorType(recipe) == 'User'">{{recipe.source}}</p>
+      </td>
+    </ng-container>
+
+    <!-- Delete column -->
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Delete?</th>
+      <td mat-cell *matCellDef="let recipe">
+        <button class="delete-button" (click)="deleteRecipe(recipe)">
+          <img src="../../../assets/delete.png" class="delete-image" />
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
+    <tr mat-row *matRowDef="let recipe; columns: tableColumns" (click)="inspectRecipe(recipe)"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" aria-label="Select page of recipes"></mat-paginator>
+</div>

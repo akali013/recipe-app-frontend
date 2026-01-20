@@ -1,13 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { HeaderService } from '../../_services/header.service';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AccountService } from 'src/app/_services/account.service';
 import { BehaviorSubject } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-settings-page',
   templateUrl: './settings-page.component.html',
-  styleUrls: ['./settings-page.component.css']
+  styleUrls: ['./settings-page.component.css'],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule
+  ],
+  standalone: true
 })
 export class SettingsPageComponent implements OnInit {
   email = new FormControl(this.accountService.accountValue?.email, Validators.required);

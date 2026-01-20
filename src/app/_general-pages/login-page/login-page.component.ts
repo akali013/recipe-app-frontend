@@ -31,14 +31,17 @@ export class LoginPageComponent implements OnInit {
       () => {
         if (this.route.snapshot.queryParams["returnUrl"]) {
           this.router.navigate([this.route.snapshot.queryParams["returnUrl"]]);
+          return;
         }
 
         if (this.accountService.accountValue?.role == Role.Admin) {
-          this.router.navigate(["/user/recipes"]);    // !! Redirect to recipes table until admin pages are implemented
+          this.router.navigate(["/admin/recipes"]);   // Redirect admins to the admin recipes table in the admin module
+          return;
         }
 
         if (this.accountService.accountValue?.role == Role.User) {
-          this.router.navigate(["/user/recipes"]);    // Redirect users to recipes table
+          this.router.navigate(["/user/recipes"]);    // Redirect users to the recipes table in the user module
+          return;
         }
       }
     );
