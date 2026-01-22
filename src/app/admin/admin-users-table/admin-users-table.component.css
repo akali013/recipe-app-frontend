@@ -1,0 +1,73 @@
+th {
+  font-weight: bold;
+}
+
+td, th {
+  font-size: 18px;
+  color: white;
+}
+
+td {
+  cursor: pointer;
+}
+
+td:hover {
+  color: #81D3DE;
+}
+
+table,
+.mat-paginator {
+  background-color: #004F56;
+  color: white;
+}
+
+.users-table-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 3%;
+}
+
+.mat-column-id {
+  width: 15%;
+}
+
+.mat-column-email {
+  width: 10%;
+}
+
+.mat-column-created,
+.mat-column-updated {
+  width: 10%;
+}
+
+.mat-column-ban {
+  width: 5%;
+}
+
+.ban-button,
+.unban-button {
+  background-color: transparent;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+
+.ban-image {
+  width: 90%;
+}
+
+.add-user-button {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+
+  padding: 10px 20px;
+  font-size: 20px;
+  background-color: #324B4E;
+  color: #CDE7EB;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+}

@@ -93,12 +93,6 @@ export class AccountService {
     );
   }
 
-  changeAccountBanStatus(id: string, banStatus: boolean): Observable<Account> {
-    return this.http.put<Account>(`${this.apiUrl}/${id}`, { IsBanned: banStatus }, { headers: this.headers }).pipe(
-      catchError(this.handleError("banAccount", new Account()))
-    );
-  }
-
   deleteAccount(id: string): Observable<Account> {
     return this.http.delete<Account>(`${this.apiUrl}/${id}`).pipe(
       finalize(() => {
@@ -108,6 +102,13 @@ export class AccountService {
         }
       }),
       catchError(this.handleError("deleteAccount", new Account()))
+    );
+  }
+
+  // Get all accounts that have a User role
+  getAllUsers(): Observable<Account[]> {
+    return this.http.get<Account[]>(`${this.apiUrl}/users`, { headers: this.headers }).pipe(
+      catchError(this.handleError("getAllUsers", [new Account()]))
     );
   }
 

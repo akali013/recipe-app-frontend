@@ -16,6 +16,9 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { SettingsPageComponent } from '../_general-pages/settings-page/settings-page.component';
+import { AdminUsersTableComponent } from './admin-users-table/admin-users-table.component';
+import { AddUserPageComponent } from './add-user-page/add-user-page.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -23,7 +26,9 @@ import { SettingsPageComponent } from '../_general-pages/settings-page/settings-
   declarations: [
     AdminRecipeTableComponent,
     AdminLayoutComponent,
-    AdminSidebarContentComponent
+    AdminSidebarContentComponent,
+    AdminUsersTableComponent,
+    AddUserPageComponent
   ],
   imports: [
     CommonModule,
@@ -32,6 +37,8 @@ import { SettingsPageComponent } from '../_general-pages/settings-page/settings-
     MatSortModule,
     MatPaginatorModule,
     MatSidenavModule,
+    ReactiveFormsModule,
+    FormsModule,
     SearchBarComponent,
     HeaderComponent,
     SettingsPageComponent

@@ -1,0 +1,28 @@
+<form class="create-user-form" [formGroup]="createUserForm" (ngSubmit)="createAccount()">
+  <div class="form-input-container">
+    <label for="new-email-input">
+      Email:
+    </label>
+    <input id="new-email-input" type="text" placeholder="Enter email..." formControlName="email" />
+  </div>
+
+  <div class="form-input-container">
+    <label for="new-password-input">
+      Password:
+    </label>
+    <input id="new-password-input" type="password" placeholder="Enter password..." formControlName="password" />
+  </div>
+
+  <div class="form-input-container">
+    <label for="confirm-password-input">
+      Confirm Password:
+    </label>
+    <input id="confirm-password-input" type="password" placeholder="Retype password..." formControlName="confirmPassword" />
+  </div>
+
+  <div class="create-button-container">
+    <button class="create-button" type="submit">
+      Create Account
+    </button>
+  </div>
+</form>
