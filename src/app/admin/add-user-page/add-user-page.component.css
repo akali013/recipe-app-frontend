@@ -1,0 +1,49 @@
+label {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+input {
+  background-color: #00363C;
+  color: white;
+  font-size: 16px;
+  border: none;
+  padding: 2%;
+}
+
+input::placeholder {
+  color: white;
+  font-size: 16px;
+}
+
+.create-user-form {
+  display: flex;
+  flex-direction: column;
+
+  padding-top: 20vh;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.form-input-container {
+  display: flex;
+  flex-direction: column;
+
+  margin-top: 20px;
+}
+
+.create-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 15vh;
+}
+
+.create-button {
+  padding: 10px 15px;
+  font-size: 20px;
+  color: #CDE7EB;
+  background-color: #324B4E;
+  border: none;
+  cursor: pointer;
+}

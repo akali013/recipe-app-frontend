@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminRecipeTableComponent } from './admin-recipe-table/admin-recipe-table.component';
 import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
 import { SettingsPageComponent } from '../_general-pages/settings-page/settings-page.component';
+import { AdminUsersTableComponent } from './admin-users-table/admin-users-table.component';
+import { AddUserPageComponent } from './add-user-page/add-user-page.component';
 
 const routes: Routes = [
   {
@@ -10,6 +12,8 @@ const routes: Routes = [
     component: AdminLayoutComponent,
     children: [
       { path: "recipes", component: AdminRecipeTableComponent },
+      { path: "users", component: AdminUsersTableComponent },
+      { path: "add-user", component: AddUserPageComponent },
       { path: "settings", component: SettingsPageComponent },
       { path: "**", redirectTo: "recipes", pathMatch: "full" }
     ]
