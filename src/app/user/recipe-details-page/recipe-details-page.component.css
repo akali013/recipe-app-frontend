@@ -1,6 +1,6 @@
 li {
-  font-size: 18px;
-  margin-top: 10px;
+  font-size: 1.5rem;
+  margin-top: 0.8rem;
 }
 
 .details-container {
@@ -47,7 +47,7 @@ li {
   color: white;
   padding: 2px 5px;
   font-family: "Hanken Grotesk";
-  font-size: 16px;
+  font-size: 1rem;
 
   opacity: 0;
   transition: opacity 0.3s;
@@ -55,7 +55,7 @@ li {
 
 .current-step {
   font-weight: bold;
-  font-size: 22px;
+  font-size: 2rem;
 }
 
 .step-button:hover .button-tooltip {
@@ -68,6 +68,6 @@ li {
 }
 
 .source {
-  font-size: 20px;
+  font-size: 1.2rem;
   font-style: italic;
 }

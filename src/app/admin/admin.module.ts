@@ -19,6 +19,7 @@ import { SettingsPageComponent } from '../_general-pages/settings-page/settings-
 import { AdminUsersTableComponent } from './admin-users-table/admin-users-table.component';
 import { AddUserPageComponent } from './add-user-page/add-user-page.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AdminRecipeDetailsComponent } from './admin-recipe-details/admin-recipe-details.component';
 
 
 
@@ -28,7 +29,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AdminLayoutComponent,
     AdminSidebarContentComponent,
     AdminUsersTableComponent,
-    AddUserPageComponent
+    AddUserPageComponent,
+    AdminRecipeDetailsComponent
   ],
   imports: [
     CommonModule,

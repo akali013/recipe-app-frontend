@@ -1,3 +1,9 @@
+h1 {
+  font-size: 56px;
+  font-weight: 500;
+  color: #81D3DE;
+}
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -17,9 +23,4 @@
   background-color: transparent;
   border: none;
   cursor: pointer;
-}
-
-.right-section {
-  font-size: 56px; 
-  color: #81D3DE;
 }

@@ -5,7 +5,7 @@
       <label for="recipe-name-input">
         Recipe Name:
       </label>
-      <input id="recipe-name-input" class="form-input" type="text" placeholder="Name..." formControlName="name" />
+      <input id="recipe-name-input" name="recipe-name-input" class="form-input" type="text" placeholder="Name..." formControlName="name" />
     </div>
 
     <div class="form-input-container">
@@ -26,24 +26,24 @@
       <label class="recipe-image-label" for="recipe-image-input">
         Choose Recipe Image
       </label>
-      <input type="file" id="recipe-image-input" accept="image/*" (change)="loadImagePreview($event)" />
+      <input type="file" id="recipe-image-input" name="recipe-image-input" accept="image/*" (change)="loadImagePreview($event)" />
     </div>
 
-    <img *ngIf="previewUrl" class="recipe-image-preview" [src]="previewUrl" />
+    <img *ngIf="previewUrl" class="recipe-image-preview" [src]="previewUrl" alt="Previewed image of new recipe" />
   </div>
 
   <h1>Ingredients</h1>
   <div class="ingredients-section" formArrayName="ingredients">
     <div class="form-input-container" *ngFor="let ingredient of ingredients.controls; let i=index">
-      <label for="ingredient-input-{{i}}">
+      <label for="ingredient-input-{{i + 1}}">
         Ingredient {{i + 1}}:
       </label>
       <div class="removable-input-container">
-        <input type="text" id="ingredient-input-{{i}}" class="removable-input" placeholder="Add ingredient..."
+        <input type="text" id="ingredient-input-{{i + 1}}" name="ingredient-input-{{i + 1}}" class="removable-input" placeholder="Add ingredient..."
           [formControlName]="i" />
 
         <button class="remove-input-button" (click)="removeIngredient(i)" type="button">
-          <img class="remove-input-image" src="../../assets/remove.png" />
+          <img class="remove-input-image" src="../../assets/remove.png" alt="Delete ingredient {{i}} button icon" />
         </button>
       </div>
     </div>
@@ -56,16 +56,16 @@
   <h1>Instructions</h1>
   <div class="instructions-section" formArrayName="instructions">
     <div class="form-input-container" *ngFor="let instruction of instructions.controls; let i=index">
-      <label for="instruction-input-{{i}}">
+      <label for="instruction-input-{{i + 1}}">
         Instruction {{i + 1}}:
       </label>
 
       <div class="removable-input-container">
-        <input type="text" id="instruction-input-{{i}}" class="removable-input" placeholder="Add instruction..."
+        <input type="text" id="instruction-input-{{i + 1}}" name="instruction-input-{{i + 1}}" class="removable-input" placeholder="Add instruction..."
           [formControlName]="i" />
 
         <button type="button" class="remove-input-button" (click)="removeInstruction(i)">
-          <img class="remove-input-image" src="../../assets/remove.png" />
+          <img class="remove-input-image" src="../../assets/remove.png" alt="Delete instruction {{i}} button icon" />
         </button>
       </div>
     </div>

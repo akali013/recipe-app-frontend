@@ -54,6 +54,21 @@ export class RecipeService {
     );
   }
 
+  updateRecipe(recipe: Recipe): Observable<any> {
+    const recipeDTO = {
+      name: recipe.name,
+      type: recipe.type,
+      ingredients: recipe.ingredients,
+      instructions: recipe.instructions,
+      source: recipe.source,
+      imageUrl: recipe.imageUrl
+    };
+
+    return this.http.put(`${this.apiUrl}/${recipe.id}`, recipeDTO, {headers: this.headers, withCredentials: true}).pipe(
+      catchError(this.handleError("updateRecipe"))
+    );
+  }
+
   deleteRecipe(recipe: Recipe): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${recipe.id}`, { headers: this.headers }).pipe(
       catchError(this.handleError("deleteRecipe"))

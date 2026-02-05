@@ -6,9 +6,9 @@
       Email:
     </label>
     <div class="editable-input-container">
-      <input id="email-input" class="settings-input" type="text" placeholder="Email" [formControl]="email" />
+      <input id="email-input" name="email-input" class="settings-input" type="text" placeholder="Email" [formControl]="email" />
       <button class="edit-button" (click)="this.editingState.next('editingEmail')">
-        <img class="edit-image" src="../../assets/edit.png" />
+        <img class="edit-image" src="../../assets/edit.png" alt="Edit username button icon" />
       </button>
     </div>
 
@@ -27,9 +27,9 @@
       Password:
     </label>
     <div class="editable-input-container">
-      <input id="password-input" class="settings-input" type="password" placeholder="New password" [formControl]="password" />
+      <input id="password-input" name="password-input" class="settings-input" type="password" placeholder="New password" [formControl]="password" />
       <button class="edit-button" (click)="this.editingState.next('editingPassword')">
-        <img class="edit-image" src="../../assets/edit.png" />
+        <img class="edit-image" src="../../assets/edit.png" alt="Edit password button icon" />
       </button>
     </div>
 
@@ -37,7 +37,7 @@
       <label for="confirm-password-input">
         Confirm password:
       </label>
-      <input id="confirm-password-input" class="settings-input" type="password" placeholder="Retype password" [formControl]="confirmPassword" />
+      <input id="confirm-password-input" name="confirm-password-input" class="settings-input" type="password" placeholder="Retype password" [formControl]="confirmPassword" />
     </div>
 
     <div class="buttons-container" *ngIf="this.editingState.value === 'editingPassword'">

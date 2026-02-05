@@ -31,11 +31,11 @@
       <th mat-header-cell *matHeaderCellDef>Ban Status</th>
       <td mat-cell *matCellDef="let user">
         <button *ngIf="!user.isBanned" class="ban-button" (click)="toggleBanStatus(user)">
-          <img src="../../../assets/ban.png" class="ban-image" />
+          <img src="../../../assets/ban.png" class="ban-image" alt="Ban user icon" />
         </button>
 
         <button *ngIf="user.isBanned" class="unban-button" (click)="toggleBanStatus(user)">
-          <img src="../../../assets/unban.png" class="ban-image" />
+          <img src="../../../assets/unban.png" class="ban-image" alt="Unban user icon" />
         </button>
       </td>
     </ng-container>
