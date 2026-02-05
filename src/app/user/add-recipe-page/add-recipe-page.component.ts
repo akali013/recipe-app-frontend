@@ -40,7 +40,7 @@ export class AddRecipePageComponent implements OnInit {
   get instructions() {
     return this.recipeForm.get("instructions") as FormArray;
   }
-  
+
   get imageUrl() {
     return this.recipeForm.get("imageUrl") as FormControl;
   }
@@ -93,6 +93,7 @@ export class AddRecipePageComponent implements OnInit {
   }
 
   fileIsImage(file: File): boolean {
+    // https://developer.mozilla.org/en-US/docs/Web/Media/Guides/Formats/Image_types
     const imageTypes = [
       "image/apng",
       "image/bmp",

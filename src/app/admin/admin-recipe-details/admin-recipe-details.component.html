@@ -1,0 +1,87 @@
+<p *ngIf="isLoading">Loading Recipe...</p>
+
+<form class="edit-recipe-form" [formGroup]="recipeForm" *ngIf="!isLoading" (ngSubmit)="updateRecipe()">
+  <h1>Recipe Image, Name, and Type</h1>
+  <div class="recipe-image-container">
+    <img class="recipe-image" src="{{this.imageUrl.value}}" alt="Current or edited recipe image" />
+
+    <label for="edit-recipe-image-input" class="edit-button">
+      Edit Recipe Image
+    </label>
+    <input id="edit-recipe-image-input" name="edit-recipe-image-input" type="file" accept="image/*" (change)="loadImagePreview($event)" />
+  </div>
+
+  <div class="form-input-container">
+    <label for="recipe-name">
+      Recipe Name:
+    </label>
+    <input id="recipe-name" name="recipe-name" type="text" placeholder="Enter recipe name..." formControlName="name" />
+  </div>
+
+  <div class="form-input-container">
+    <label for="recipe-type">
+      Recipe Type:
+    </label>
+    <input id="recipe-type" name="recipe-type" type="text" placeholder="Enter recipe type..." formControlName="type" />
+  </div>
+
+  <div class="ingredients-container" formArrayName="ingredients">
+    <h1>Ingredients</h1>
+    <ul class="ingredients-list">
+      <li *ngFor="let ingredient of ingredients.controls; let i=index">
+        <div class="ingredient-input-container">
+          <label for="ingredient-input-{{i}}">
+            Ingredient {{i + 1}}:
+          </label>
+          <input id="ingredient-input-{{i}}" name="ingredient-input-{{i}}" class="ingredient-input" type="text"
+            placeholder="Enter ingredient {{i + 1}}..." [formControlName]="i" />
+
+          <button class="delete-button" type="button" (click)="removeIngredient(i)">
+            Delete
+          </button>
+        </div>
+      </li>
+    </ul>
+
+    <button class="add-button" type="button" (click)="addIngredient()">
+      Add Ingredient
+    </button>
+  </div>
+
+  <div class="instructions-container" formArrayName="instructions">
+    <h1>Instructions</h1>
+    <ul class="instructions-list">
+      <li *ngFor="let instruction of instructions.controls; let i=index">
+        <div class="instruction-input-container">
+          <label for="instruction-input-{{i}}">
+            Instruction {{i + 1}}:
+          </label>
+          <input id="instruction-input-{{i}}" name="instruction-input-{{i}}" class="instruction-input" type="text"
+            placeholder="Enter instruction {{i + 1}}..." [formControlName]="i" />
+
+          <button class="delete-button" type="button" (click)="removeInstruction(i)">
+            Delete
+          </button>
+        </div>
+      </li>
+    </ul>
+
+    <button class="add-button" type="button" (click)="addInstruction()">
+      Add Instruction
+    </button>
+  </div>
+
+  <h1>Recipe Source</h1>
+  <div class="form-input-container">
+    <label for="source-input">
+      Source
+    </label>
+    <input id="source-input" name="source-input" type="text" placeholder="Enter recipe source URL..." formControlName="source" />
+  </div>
+
+  <div class="submit-button-container">
+    <button class="submit-button" type="submit">
+      Save Changes
+    </button>
+  </div>
+</form>

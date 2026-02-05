@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { Recipe } from 'src/app/_models/recipe';
 import { HeaderService } from 'src/app/_services/header.service';
 import { RecipeService } from 'src/app/_services/recipe.service';
@@ -18,7 +19,7 @@ export class AdminRecipeTableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private recipeService: RecipeService, private headerService: HeaderService) { }
+  constructor(private recipeService: RecipeService, private headerService: HeaderService, private router: Router) { }
 
   ngOnInit(): void {
     this.headerService.setHeaderText("Recipes");
@@ -55,7 +56,7 @@ export class AdminRecipeTableComponent implements OnInit {
   }
 
   inspectRecipe(recipe: Recipe) {
-    console.log(recipe);
+    this.router.navigate([`admin/recipes/${recipe.id}`]);
   }
 
 }

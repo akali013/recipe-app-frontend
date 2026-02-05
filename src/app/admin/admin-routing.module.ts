@@ -5,6 +5,7 @@ import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
 import { SettingsPageComponent } from '../_general-pages/settings-page/settings-page.component';
 import { AdminUsersTableComponent } from './admin-users-table/admin-users-table.component';
 import { AddUserPageComponent } from './add-user-page/add-user-page.component';
+import { AdminRecipeDetailsComponent } from './admin-recipe-details/admin-recipe-details.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,7 @@ const routes: Routes = [
     component: AdminLayoutComponent,
     children: [
       { path: "recipes", component: AdminRecipeTableComponent },
+      { path: "recipes/:id", component: AdminRecipeDetailsComponent },
       { path: "users", component: AdminUsersTableComponent },
       { path: "add-user", component: AddUserPageComponent },
       { path: "settings", component: SettingsPageComponent },
