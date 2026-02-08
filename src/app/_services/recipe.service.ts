@@ -32,39 +32,35 @@ export class RecipeService {
     );
   }
 
+  // Retrieves data of the Recipe type from the backend via the recipe's id
   getRecipeById(id: string): Observable<Recipe> {
     return this.http.get<Recipe>(`${this.apiUrl}/${id}`).pipe(
+      // User-submitted recipe images are stored in the backend at http://localhost:5133/recipeImages/{fileName}
+      // Leave MealsDB image URLs alone
+      tap(recipe => {
+        if (!recipe.imageUrl.includes("http")) {
+          recipe.imageUrl = `${environment.apiUrl}/recipeImages/${recipe.imageUrl}`.trim();
+        }
+      }),
       catchError(this.handleError<Recipe>("getRecipeById", this.errorRecipe))
     );
   }
 
-  createRecipe(recipe: Recipe): Observable<Recipe> {
-    const id = this.accountService.accountValue?.id;
-    const createRequestObj = {
-      "Name": recipe.name,
-      "Type": recipe.type,
-      "Ingredients": recipe.ingredients,
-      "Instructions": recipe.instructions,
-      "ImageUrl": recipe.imageUrl,
-      "UserId": id
-    };
+  // Send the new recipe info as FormData with the user's id so the recipe can be linked to them
+  createRecipe(recipeInfo: FormData): Observable<Recipe> {
+    const id = this.accountService.accountValue?.id!;
+    recipeInfo.set("userId", id);
 
-    return this.http.post<Recipe>(this.apiUrl, createRequestObj, { headers: this.headers }).pipe(
+    // Do not set the Content-Type header for the FormData recipeInfo parameter
+    return this.http.post<Recipe>(this.apiUrl, recipeInfo).pipe(
       catchError(this.handleError("createRecipe", this.errorRecipe))
     );
   }
 
-  updateRecipe(recipe: Recipe): Observable<any> {
-    const recipeDTO = {
-      name: recipe.name,
-      type: recipe.type,
-      ingredients: recipe.ingredients,
-      instructions: recipe.instructions,
-      source: recipe.source,
-      imageUrl: recipe.imageUrl
-    };
-
-    return this.http.put(`${this.apiUrl}/${recipe.id}`, recipeDTO, {headers: this.headers, withCredentials: true}).pipe(
+  // Send the updated recipe information as FormData so the image data can be sent as well
+  updateRecipe(id: string, recipeInfo: FormData): Observable<any> {
+    // Do not set the Content-Type header for the FormData recipeInfo parameter
+    return this.http.put(`${this.apiUrl}/${id}`, recipeInfo).pipe(
       catchError(this.handleError("updateRecipe"))
     );
   }

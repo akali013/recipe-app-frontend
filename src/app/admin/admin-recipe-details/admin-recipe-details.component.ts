@@ -12,10 +12,11 @@ import { RecipeService } from 'src/app/_services/recipe.service';
   styleUrls: ['./admin-recipe-details.component.css']
 })
 export class AdminRecipeDetailsComponent implements OnInit {
-  selectedRecipe?: Recipe
+  selectedRecipe?: Recipe   // Recipe for the current page
   isLoading: boolean = true;
+  blobUrl = "";
   previewUrl?: SafeUrl;     // Angular requires images to have a SafeUrl src
-
+  recipeData: FormData = new FormData();   // Send the recipe data to the backend via the multipart/form-data type to be picked up by the .NET IFormFile type
   recipeForm: FormGroup = this.fb.group({
     imageUrl: [""],
     name: ["", Validators.required],
@@ -56,6 +57,7 @@ export class AdminRecipeDetailsComponent implements OnInit {
     this.getSelectedRecipe();
   }
 
+  // Get the chosen recipe from the backend via the id in the URL
   getSelectedRecipe() {
     this.recipeService.getRecipeById(this.route.snapshot.paramMap.get("id")!).subscribe(recipe => {
       // Initialize form values
@@ -64,6 +66,7 @@ export class AdminRecipeDetailsComponent implements OnInit {
       this.source.setValue(this.selectedRecipe.source);
       this.type.setValue(this.selectedRecipe.type);
       this.name.setValue(this.selectedRecipe.name);
+      // Push new form controls (inputs) for each ingredient and instruction
       this.selectedRecipe.ingredients.map(ingredient => {
         this.ingredients.push(this.fb.control(ingredient, Validators.required));
       });
@@ -91,33 +94,33 @@ export class AdminRecipeDetailsComponent implements OnInit {
     this.instructions.removeAt(index);
   }
 
-  // Loads the selected recipe image as a blob URL
+  // Load the recipe image that the user selected from their files
   loadImagePreview(event: any) {
-    let blobUrl = "";
+    if (!event.target.files[0] || !this.fileIsImage(event.target.files[0])) return;
 
-    if (event.target.files[0] && this.fileIsImage(event.target.files[0])) {
-      blobUrl = URL.createObjectURL(event.target.files[0]);
-      // Sanitize the blobUrl into a SafeUrl so that Angular can show the preview image
-      this.previewUrl = this.sanitizer.bypassSecurityTrustUrl(blobUrl);
-      // Store the blobUrl instead of the previewUrl since it is a string and not a SafeUrl
-      this.imageUrl.setValue(blobUrl);
-    }
+    // Show preview image via blob url that encodes the image data
+    this.blobUrl = URL.createObjectURL(event.target.files[0]);
+    // Sanitize the blobUrl into a SafeUrl so that Angular can show the preview image
+    this.previewUrl = this.sanitizer.bypassSecurityTrustUrl(this.blobUrl);
+
+    this.imageUrl.setValue(event.target.files[0].name);
+    // The third parameter is the filename under the Content-Disposition header so .NET's IFormFile can retrieve it and the file extension
+    this.recipeData.set("recipeImage", event.target.files[0], this.imageUrl.value);
   }
 
   updateRecipe() {
-    const newRecipe: Recipe = {
-      id: this.selectedRecipe?.id!,
-      name: this.name.value,
-      type: this.type.value,
-      ingredients: this.ingredients.value,
-      instructions: this.instructions.value,
-      source: this.source.value,
-      imageUrl: this.imageUrl.value
-    };
+    // Load recipe information into the FormData object so it can be picked up by the [FromForm] controller attribute 
+    this.recipeData.set("id", this.selectedRecipe?.id!);
+    this.recipeData.set("name", this.name.value);
+    this.recipeData.set("type", this.type.value);
+    this.recipeData.set("ingredients", this.ingredients.value);
+    this.recipeData.set("instructions", this.instructions.value);
+    this.recipeData.set("source", this.source.value);
 
-    this.recipeService.updateRecipe(newRecipe).subscribe();
+    this.recipeService.updateRecipe(this.selectedRecipe?.id!, this.recipeData).subscribe();
   }
 
+  // Checks if the file parameter has any of the supported image file types
   private fileIsImage(file: File): boolean {
     // https://developer.mozilla.org/en-US/docs/Web/Media/Guides/Formats/Image_types
     const fileTypes = [
