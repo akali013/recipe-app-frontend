@@ -3,10 +3,10 @@
 <form class="edit-recipe-form" [formGroup]="recipeForm" *ngIf="!isLoading" (ngSubmit)="updateRecipe()">
   <h1>Recipe Image, Name, and Type</h1>
   <div class="recipe-image-container">
-    <img class="recipe-image" src="{{this.imageUrl.value}}" alt="Current or edited recipe image" />
+    <img *ngIf="this.previewUrl || this.imageUrl.value" class="recipe-image" [src]="this.previewUrl || this.imageUrl.value" alt="Current or edited recipe image" />
 
     <label for="edit-recipe-image-input" class="edit-button">
-      Edit Recipe Image
+      <img class="edit-icon" src="../../../assets/edit.png" alt="Icon for the edit recipe image button" />
     </label>
     <input id="edit-recipe-image-input" name="edit-recipe-image-input" type="file" accept="image/*" (change)="loadImagePreview($event)" />
   </div>
@@ -37,7 +37,7 @@
             placeholder="Enter ingredient {{i + 1}}..." [formControlName]="i" />
 
           <button class="delete-button" type="button" (click)="removeIngredient(i)">
-            Delete
+            <img class="delete-icon" src="../../../assets/delete.png" alt="Delete button icon for ingredient {{i}}" />
           </button>
         </div>
       </li>
@@ -60,7 +60,7 @@
             placeholder="Enter instruction {{i + 1}}..." [formControlName]="i" />
 
           <button class="delete-button" type="button" (click)="removeInstruction(i)">
-            Delete
+            <img class="delete-icon" src="../../../assets/delete.png" alt="Delete button icon for instruction {{i}}" />
           </button>
         </div>
       </li>

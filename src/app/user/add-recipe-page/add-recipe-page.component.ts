@@ -11,6 +11,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
   styleUrls: ['./add-recipe-page.component.css']
 })
 export class AddRecipePageComponent implements OnInit {
+  recipeData: FormData = new FormData();    // Form data to be sent to the backend via the multipart/form type that allows files
   recipeForm: FormGroup = this.fb.group({
     name: ["", Validators.required],
     type: ["", Validators.required],
@@ -68,17 +69,13 @@ export class AddRecipePageComponent implements OnInit {
   }
 
   createRecipe() {
-    const newRecipe: Recipe = {
-      id: "",   // Id is set in the backend
-      name: this.name.value,
-      type: this.type.value,
-      ingredients: this.ingredients.value,
-      instructions: this.instructions.value,
-      source: "You",
-      imageUrl: this.imageUrl.value
-    };
+    this.recipeData.set("name", this.name.value);
+    this.recipeData.set("type", this.type.value);
+    this.recipeData.set("ingredients", this.ingredients.value);
+    this.recipeData.set("instructions", this.instructions.value);
+    this.recipeData.set("imageUrl", this.imageUrl.value);
 
-    this.recipeService.createRecipe(newRecipe).subscribe(recipe => console.log(recipe));
+    this.recipeService.createRecipe(this.recipeData).subscribe(recipe => console.log(recipe));
   }
 
   // Loads the selected recipe image as a blob URL
@@ -88,7 +85,9 @@ export class AddRecipePageComponent implements OnInit {
       // Sanitize the blobUrl into a SafeUrl so that Angular can show the preview image
       this.previewUrl = this.sanitizer.bypassSecurityTrustUrl(this.blobUrl);
       // Store the blobUrl instead of the previewUrl since it is a string and not a SafeUrl
-      this.imageUrl.setValue(this.blobUrl);
+      this.imageUrl.setValue(event.target.files[0].name);
+       // The third parameter is the filename under the Content-Disposition header so .NET's IFormFile can retrieve it and the file extension
+      this.recipeData.set("recipeImage", event.target.files[0], this.imageUrl.value);
     }
   }
 

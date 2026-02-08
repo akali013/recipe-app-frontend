@@ -51,6 +51,11 @@ label:focus {
   cursor: pointer;
 }
 
+.edit-button {
+  display: flex;
+  justify-content: center;
+}
+
 .edit-icon,
 .delete-icon {
   width: 70%;

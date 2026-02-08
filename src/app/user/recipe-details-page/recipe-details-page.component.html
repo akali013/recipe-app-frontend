@@ -1,4 +1,6 @@
-<div class="details-container">
+<p *ngIf="isLoading">Loading recipe...</p>
+
+<div class="details-container" *ngIf="!isLoading">
   <div class="recipe-image-container">
     <img class="recipe-image" [src]="recipeImageUrl" alt="Image of {{selectedRecipe.name}}" />
     <sub>Source: {{imageSource}}</sub>
