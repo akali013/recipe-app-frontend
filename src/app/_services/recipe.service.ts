@@ -71,6 +71,13 @@ export class RecipeService {
     );
   }
 
+  // Get all recipes made by the user with the parameter id
+  getUserRecipes(id: string): Observable<Recipe[]> {
+    return this.http.get<Recipe[]>(`${this.apiUrl}/users/${id}`, { headers: this.headers, withCredentials: true }).pipe(
+      catchError(this.handleError("getUserRecipes", [this.errorRecipe]))
+    );
+  }
+
   // Source: https://v14.angular.io/tutorial/toh-pt6
   // Handles errors from any calls made to the API
   private handleError<T>(operation = 'operation', result?: T) {
