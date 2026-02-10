@@ -1,0 +1,14 @@
+.page-container {
+  padding: 3%;
+}
+
+.form-input-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.editable-input-container {
+  display: flex;
+  align-items: center;
+}

@@ -6,6 +6,7 @@ import { SettingsPageComponent } from '../_general-pages/settings-page/settings-
 import { AdminUsersTableComponent } from './admin-users-table/admin-users-table.component';
 import { AddUserPageComponent } from './add-user-page/add-user-page.component';
 import { AdminRecipeDetailsComponent } from './admin-recipe-details/admin-recipe-details.component';
+import { AdminEditUserComponent } from './admin-edit-user/admin-edit-user.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,7 @@ const routes: Routes = [
       { path: "recipes", component: AdminRecipeTableComponent },
       { path: "recipes/:id", component: AdminRecipeDetailsComponent },
       { path: "users", component: AdminUsersTableComponent },
+      { path: "edit-user/:id", component: AdminEditUserComponent },
       { path: "add-user", component: AddUserPageComponent },
       { path: "settings", component: SettingsPageComponent },
       { path: "**", redirectTo: "recipes", pathMatch: "full" }
