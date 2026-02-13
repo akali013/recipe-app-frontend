@@ -26,7 +26,9 @@ export class RecipeDetailsPageComponent implements OnInit {
   getRecipe() {
     const id = this.route.snapshot.paramMap.get("id")!;
 
+    // Get the selected recipe from the backend via its id
     this.recipeService.getRecipeById(id).subscribe(recipe => {
+      // Determine if the source is user-generated (localhost) or a MealsDB API link
       if (recipe.imageUrl.includes("localhost:")) {
         this.imageSource = `MyRecipes User`;
       }
@@ -37,21 +39,22 @@ export class RecipeDetailsPageComponent implements OnInit {
       this.selectedRecipe = recipe;
       this.headerService.setHeaderText(this.selectedRecipe.name);
       this.isLoading = false;
-      console.log("basduwj");
     });
   }
 
+  // Decrements the step index to move back a step and cycles through the instructions if necessary
   previousStep() {
     this.stepIndex - 1 > -1 ? this.stepIndex-- : this.stepIndex = this.selectedRecipe.instructions.length - 1;
   }
 
+  // Increments the step index to move forward a step and cycles through the instructions if necessary
   nextStep() {
     this.stepIndex + 1 < this.selectedRecipe.instructions.length ? this.stepIndex++ : this.stepIndex = 0;
   }
 
   // Determine if the recipe source is missing, a url (API url), or a Guid (User)
   getRecipeSourceText(): string {
-    if (this.selectedRecipe.source && this.selectedRecipe.source.includes("http") && this.selectedRecipe.source.includes("-")) {
+    if (this.selectedRecipe.source && this.selectedRecipe.source.includes("http")) {
       return this.selectedRecipe.source;
     }
 

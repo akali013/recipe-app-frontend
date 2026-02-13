@@ -8,7 +8,7 @@
     <div class="editable-input-container">
       <input id="email-input" name="email-input" class="settings-input" type="text" placeholder="Email" [formControl]="email" />
       <button class="edit-button" (click)="this.editingState.next('editingEmail')">
-        <img class="edit-image" src="../../assets/edit.png" alt="Edit username button icon" />
+        <img class="edit-image" src="../../assets/edit.png" alt="Edit email button icon" />
       </button>
     </div>
 
@@ -50,8 +50,8 @@
     </div>
   </div>
 
-  <div class="logout-button-container" (click)="logOut()">
-    <button class="logout-button">
+  <div class="logout-button-container">
+    <button class="logout-button" (click)="logOut()">
       Log Out
     </button>
   </div>

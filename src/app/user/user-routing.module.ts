@@ -9,16 +9,17 @@ import { SettingsPageComponent } from '../_general-pages/settings-page/settings-
 import { AuthGuard } from '../_helpers/auth.guard';
 
 
+// Defines all URLs under the user (/user) module
 const routes: Routes = [
   {
-    path: "", component: UserLayoutComponent,     // /users
+    path: "", component: UserLayoutComponent,
     children: [
       { path: "recipes", component: RecipeTablePageComponent },
       { path: "recipes/:id", component: RecipeDetailsPageComponent },
       { path: "favorites", component: FavoritesPageComponent },
       { path: "add-recipe", component: AddRecipePageComponent },
       { path: "settings", component: SettingsPageComponent },
-      { path: "**", redirectTo: "recipes", pathMatch: "full" }
+      { path: "**", redirectTo: "recipes", pathMatch: "full" }    // Redirect any unknown URLs to the recipes table
     ]
   }
 ];

@@ -15,6 +15,7 @@ export class SignupPageComponent implements OnInit {
     retypePassword: ["", Validators.required]
   });
 
+  // Getters for form controls
   get email() {
     return this.signUpForm.get("email") as FormControl;
   }
@@ -32,6 +33,7 @@ export class SignupPageComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // Create a new user account in the backend with the submitted email and password
   createAccount() {
     this.accountService.register(this.email.value, this.password.value, this.retypePassword.value).subscribe();
     this.router.navigate(["/login"]);

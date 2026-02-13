@@ -23,9 +23,12 @@ export class AddRecipePageComponent implements OnInit {
     ]),
     imageUrl: [""]
   });
+  // Same logic as admin-recipe-details where blobUrl is a placeholder for recipe image data
+  // and previewUrl is a SafeUrl of an image that can be shown with the [src] property
   blobUrl = "";
   previewUrl?: SafeUrl;
 
+  // Getters for recipeForm values
   get name() {
     return this.recipeForm.get("name") as FormControl;
   }
@@ -52,23 +55,28 @@ export class AddRecipePageComponent implements OnInit {
     this.headerService.setHeaderText("Add a Recipe");
   }
 
+  // Adds an ingredient input to the ingredients section
   addIngredient() {
     this.ingredients.push(new FormControl("", Validators.required));
   }
 
+  // Adds an instruction input to the instructions section
   addInstruction() {
     this.instructions.push(new FormControl("", Validators.required));
   }
 
+  // Removes the specified ingredient
   removeIngredient(index: number) {
     this.ingredients.removeAt(index);
   }
 
+  // Removes the specified instruction
   removeInstruction(index: number) {
     this.instructions.removeAt(index);
   }
 
   createRecipe() {
+    // Prepare form data to be sent to the backend
     this.recipeData.set("name", this.name.value);
     this.recipeData.set("type", this.type.value);
     this.recipeData.set("ingredients", this.ingredients.value);
@@ -78,21 +86,24 @@ export class AddRecipePageComponent implements OnInit {
     this.recipeService.createRecipe(this.recipeData).subscribe(recipe => console.log(recipe));
   }
 
-  // Loads the selected recipe image as a blob URL
+  // Shows a preview of the user's selected image from their file system
   loadImagePreview(event: any) {
+    // Check that the submitted file is an image
     if (event.target.files[0] && this.fileIsImage(event.target.files[0])) {
       this.blobUrl = URL.createObjectURL(event.target.files[0]);
       // Sanitize the blobUrl into a SafeUrl so that Angular can show the preview image
       this.previewUrl = this.sanitizer.bypassSecurityTrustUrl(this.blobUrl);
-      // Store the blobUrl instead of the previewUrl since it is a string and not a SafeUrl
+  
+      // Include the file name and extension in the form data
       this.imageUrl.setValue(event.target.files[0].name);
-       // The third parameter is the filename under the Content-Disposition header so .NET's IFormFile can retrieve it and the file extension
+       // The third parameter will be the filename under the Content-Disposition header so .NET's IFormFile can retrieve it and the file extension
       this.recipeData.set("recipeImage", event.target.files[0], this.imageUrl.value);
     }
   }
 
+  // Checks if the given file has a supported image type
+  // Source: https://developer.mozilla.org/en-US/docs/Web/Media/Guides/Formats/Image_types
   fileIsImage(file: File): boolean {
-    // https://developer.mozilla.org/en-US/docs/Web/Media/Guides/Formats/Image_types
     const imageTypes = [
       "image/apng",
       "image/bmp",

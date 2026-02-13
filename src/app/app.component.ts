@@ -11,6 +11,7 @@ export class AppComponent {
   account?: Account | null;
 
   constructor(accountService: AccountService) {
+    // Get the currently logged-in user's info
     accountService.account.subscribe(a => this.account = a);
   }
 }

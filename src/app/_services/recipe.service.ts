@@ -26,16 +26,17 @@ export class RecipeService {
 
   constructor(private http: HttpClient, private accountService: AccountService) { }
 
+  // Get all recipes via a GET request to /recipes
   getRecipes(): Observable<Recipe[]> {
     return this.http.get<Recipe[]>(this.apiUrl).pipe(
       catchError(this.handleError<Recipe[]>("getRecipes", []))
     );
   }
 
-  // Retrieves data of the Recipe type from the backend via the recipe's id
+  // Gets the recipe with the specified id via a GET request to /recipes/{id}
   getRecipeById(id: string): Observable<Recipe> {
     return this.http.get<Recipe>(`${this.apiUrl}/${id}`).pipe(
-      // User-submitted recipe images are stored in the backend at http://localhost:5133/recipeImages/{fileName}
+      // User-submitted recipe images are stored in the backend at http://localhost:5133/recipeImages/{imageUrl}
       // Leave MealsDB image URLs alone
       tap(recipe => {
         if (!recipe.imageUrl.includes("http")) {
@@ -46,32 +47,36 @@ export class RecipeService {
     );
   }
 
+  // Create a new recipe via a POST request to /recipes
   // Send the new recipe info as FormData with the user's id so the recipe can be linked to them
+  // FormData also allows image data to be sent to the backend
   createRecipe(recipeInfo: FormData): Observable<Recipe> {
     const id = this.accountService.accountValue?.id!;
     recipeInfo.set("userId", id);
 
-    // Do not set the Content-Type header for the FormData recipeInfo parameter
+    // !! Do not set the Content-Type header for the FormData parameter
     return this.http.post<Recipe>(this.apiUrl, recipeInfo).pipe(
       catchError(this.handleError("createRecipe", this.errorRecipe))
     );
   }
 
-  // Send the updated recipe information as FormData so the image data can be sent as well
+  // Update the recipe with the specified id via a PUT request to /recipes/{id}
+  // Send the updated recipe information as FormData so the image data can be sent
   updateRecipe(id: string, recipeInfo: FormData): Observable<any> {
-    // Do not set the Content-Type header for the FormData recipeInfo parameter
+    // Do not set the Content-Type header for the FormData parameter
     return this.http.put(`${this.apiUrl}/${id}`, recipeInfo).pipe(
       catchError(this.handleError("updateRecipe"))
     );
   }
 
+  // Delete the recipe with the specified id via a DELETE request to /recipes/{id}
   deleteRecipe(recipe: Recipe): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/${recipe.id}`, { headers: this.headers }).pipe(
       catchError(this.handleError("deleteRecipe"))
     );
   }
 
-  // Get all recipes made by the user with the parameter id
+  // Get all recipes made by the user with the specified id via a GET request to /recipes/users/{id}
   getUserRecipes(id: string): Observable<Recipe[]> {
     return this.http.get<Recipe[]>(`${this.apiUrl}/users/${id}`, { headers: this.headers, withCredentials: true }).pipe(
       catchError(this.handleError("getUserRecipes", [this.errorRecipe]))

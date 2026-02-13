@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./sidebar-content.component.css']
 })
 export class SidebarContentComponent implements OnInit {
+  // Accept the sidenav object from the user layout to close it when the user switches pages
   @Input() sidebar!: MatSidenav;
 
   constructor(private router: Router) { }
@@ -15,6 +16,7 @@ export class SidebarContentComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // Navigate to the desired page and close the sidebar when navigation is complete
   goToPage(page: string) {
     this.router.navigate([`/user/${page}`]);
     this.sidebar.toggle();

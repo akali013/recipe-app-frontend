@@ -14,6 +14,7 @@ export class ErrorInterceptor implements HttpInterceptor {
   constructor(private accountService: AccountService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    // Intercept any incoming errors from the backend
     return next.handle(request).pipe(
       catchError(err => {
         if ([401, 403].includes(err.status) && this.accountService.accountValue) {
@@ -21,6 +22,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           this.accountService.logout();
         }
 
+        // Log the error message from the backend
         const error = (err && err.error && err.error.message) || err.statusText;
         console.error(err);
         return throwError(() => error);

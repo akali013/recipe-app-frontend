@@ -8,10 +8,11 @@ import { AddUserPageComponent } from './add-user-page/add-user-page.component';
 import { AdminRecipeDetailsComponent } from './admin-recipe-details/admin-recipe-details.component';
 import { AdminEditUserComponent } from './admin-edit-user/admin-edit-user.component';
 
+// URL paths within the admin module (/admin)
 const routes: Routes = [
   {
     path: '',
-    component: AdminLayoutComponent,
+    component: AdminLayoutComponent,      // Allows the header and sidebar to be consistent across all admin pages
     children: [
       { path: "recipes", component: AdminRecipeTableComponent },
       { path: "recipes/:id", component: AdminRecipeDetailsComponent },
@@ -19,7 +20,7 @@ const routes: Routes = [
       { path: "edit-user/:id", component: AdminEditUserComponent },
       { path: "add-user", component: AddUserPageComponent },
       { path: "settings", component: SettingsPageComponent },
-      { path: "**", redirectTo: "recipes", pathMatch: "full" }
+      { path: "**", redirectTo: "recipes", pathMatch: "full" }    // Redirect any unknown urls to the recipes table
     ]
   },
 ];

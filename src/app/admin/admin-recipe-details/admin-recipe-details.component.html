@@ -1,12 +1,14 @@
 <p *ngIf="isLoading">Loading Recipe...</p>
 
 <form class="edit-recipe-form" [formGroup]="recipeForm" *ngIf="!isLoading" (ngSubmit)="updateRecipe()">
-  <h1>Recipe Image, Name, and Type</h1>
+  <h2>Recipe Image, Name, and Type</h2>
   <div class="recipe-image-container">
-    <img *ngIf="this.previewUrl || this.imageUrl.value" class="recipe-image" [src]="this.previewUrl || this.imageUrl.value" alt="Current or edited recipe image" />
+    <!-- SafeUrls are shown only via the [src] property, not src -->
+    <img *ngIf="this.previewUrl || this.imageUrl.value" class="recipe-image" [src]="this.previewUrl || this.imageUrl.value" alt="Current or edited recipe image for {{this.name.value}}" />
 
+    <!-- Use the label as the file selection button since there is no way to style the default HTML select file button -->
     <label for="edit-recipe-image-input" class="edit-button">
-      <img class="edit-icon" src="../../../assets/edit.png" alt="Icon for the edit recipe image button" />
+      <img class="edit-icon" src="../../../assets/edit.png" alt="Edit recipe image" />
     </label>
     <input id="edit-recipe-image-input" name="edit-recipe-image-input" type="file" accept="image/*" (change)="loadImagePreview($event)" />
   </div>
@@ -26,7 +28,7 @@
   </div>
 
   <div class="ingredients-container" formArrayName="ingredients">
-    <h1>Ingredients</h1>
+    <h2>Ingredients</h2>
     <ul class="ingredients-list">
       <li *ngFor="let ingredient of ingredients.controls; let i=index">
         <div class="ingredient-input-container">
@@ -37,7 +39,7 @@
             placeholder="Enter ingredient {{i + 1}}..." [formControlName]="i" />
 
           <button class="delete-button" type="button" (click)="removeIngredient(i)">
-            <img class="delete-icon" src="../../../assets/delete.png" alt="Delete button icon for ingredient {{i}}" />
+            <img class="delete-icon" src="../../../assets/delete.png" alt="Delete ingredient {{i + 1}}" />
           </button>
         </div>
       </li>
@@ -49,7 +51,7 @@
   </div>
 
   <div class="instructions-container" formArrayName="instructions">
-    <h1>Instructions</h1>
+    <h2>Instructions</h2>
     <ul class="instructions-list">
       <li *ngFor="let instruction of instructions.controls; let i=index">
         <div class="instruction-input-container">
@@ -60,7 +62,7 @@
             placeholder="Enter instruction {{i + 1}}..." [formControlName]="i" />
 
           <button class="delete-button" type="button" (click)="removeInstruction(i)">
-            <img class="delete-icon" src="../../../assets/delete.png" alt="Delete button icon for instruction {{i}}" />
+            <img class="delete-icon" src="../../../assets/delete.png" alt="Delete instruction {{i + 1}}" />
           </button>
         </div>
       </li>
@@ -71,7 +73,7 @@
     </button>
   </div>
 
-  <h1>Recipe Source</h1>
+  <h2>Recipe Source</h2>
   <div class="form-input-container">
     <label for="source-input">
       Source

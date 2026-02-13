@@ -11,15 +11,16 @@ export class AuthGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const account = this.accountService.accountValue;
 
+    // Check if the user is logged in
     if (account) {
       // Check if the route is role-restricted
       if (route.data["roles"] && !route.data["roles"].includes(account.role)) {
-        // Redirect to the recipes table if the role is unauthorized
-        account.role === Role.Admin ? this.router.navigate(["admin/recipes"]) : this.router.navigate(["/user/recipes"]);
+        // Redirect to the corresponding recipes table if the role is unauthorized
+        account.role === Role.Admin ? this.router.navigate(["admin/recipes"]) : this.router.navigate(["user/recipes"]);
         return false;
       }
 
-      return true;
+      return true;    // Send the user to their desired route
     }
 
     // User isn't logged in, so navigate to the login page and store the desired route

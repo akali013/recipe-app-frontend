@@ -1,5 +1,5 @@
 <form class="add-recipe-form" [formGroup]="recipeForm" (ngSubmit)="createRecipe()">
-  <h1>General Info</h1>
+  <h2>General Info</h2>
   <div class="general-info-section">
     <div class="form-input-container">
       <label for="recipe-name-input">
@@ -12,7 +12,7 @@
       <label for="recipe-type-dropdown">
         Type:
       </label>
-      <select id="recipe-type-dropdown" class="form-input" formControlName="type">
+      <select id="recipe-type-dropdown" name="recipe-type-dropdown" class="form-input" formControlName="type">
         <option value="">Select a type</option>
         <option value="Breakfast">Breakfast</option>
         <option value="Lunch">Lunch</option>
@@ -32,7 +32,7 @@
     <img *ngIf="previewUrl" class="recipe-image-preview" [src]="previewUrl" alt="Previewed image of new recipe" />
   </div>
 
-  <h1>Ingredients</h1>
+  <h2>Ingredients</h2>
   <div class="ingredients-section" formArrayName="ingredients">
     <div class="form-input-container" *ngFor="let ingredient of ingredients.controls; let i=index">
       <label for="ingredient-input-{{i + 1}}">
@@ -43,7 +43,7 @@
           [formControlName]="i" />
 
         <button class="remove-input-button" (click)="removeIngredient(i)" type="button">
-          <img class="remove-input-image" src="../../assets/remove.png" alt="Delete ingredient {{i}} button icon" />
+          <img class="remove-input-image" src="../../assets/remove.png" alt="Delete ingredient {{i + 1}}" />
         </button>
       </div>
     </div>
@@ -53,7 +53,7 @@
     </button>
   </div>
 
-  <h1>Instructions</h1>
+  <h2>Instructions</h2>
   <div class="instructions-section" formArrayName="instructions">
     <div class="form-input-container" *ngFor="let instruction of instructions.controls; let i=index">
       <label for="instruction-input-{{i + 1}}">
@@ -65,7 +65,7 @@
           [formControlName]="i" />
 
         <button type="button" class="remove-input-button" (click)="removeInstruction(i)">
-          <img class="remove-input-image" src="../../assets/remove.png" alt="Delete instruction {{i}} button icon" />
+          <img class="remove-input-image" src="../../assets/remove.png" alt="Delete instruction {{i + 1}}" />
         </button>
       </div>
     </div>

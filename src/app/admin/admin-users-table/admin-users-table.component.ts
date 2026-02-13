@@ -20,7 +20,7 @@ export class AdminUsersTableComponent implements OnInit {
   // updated: date and time when user was last updated
   // ban: user's ban status
   tableColumns = ["id", "email", "created", "updated", "ban"];  
-  usersDataSource!: MatTableDataSource<Account>;
+  usersDataSource!: MatTableDataSource<Account>;    // MatTableDataSource stores Account objects and allows table filtering, sorting, and pagination
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -41,17 +41,18 @@ export class AdminUsersTableComponent implements OnInit {
     });
   }
 
+  // Capture search terms from the search bar and filter table data with them
   // Angular's mat-table automatically handles filtering if the row contains the term
   searchUsers(term: string | Event) {
     this.usersDataSource.filter = term.toString().trim().toLowerCase();
   }
 
-  // When a user is clicked, go to edit-user page to see their details
+  // When a user is clicked, go to the admin-edit-user page to see their details
   inspectUser(user: Account) {
     this.router.navigate([`admin/edit-user/${user.id}`]);
   }
 
-  // Rather than delete the user, update their account's ban status
+  // Rather than delete a user, update their ban status
   toggleBanStatus(user: Account) {
     this.accountService.updateAccount(user.id!, { "Email": user.email, "IsBanned": !user.isBanned }).subscribe((updatedUser) => {
       // Rerender the table with the updated user
