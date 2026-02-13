@@ -2,7 +2,7 @@
   <app-search-bar (searchEvent)="searchUsers($event)"></app-search-bar>
 
   <table mat-table [dataSource]="usersDataSource" matSort aria-label="table">
-    <!-- User ID Column -->
+    <!-- User ID column -->
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>User ID</th>
       <td mat-cell *matCellDef="let user">{{user.id}}</td>
@@ -14,7 +14,8 @@
       <td mat-cell *matCellDef="let user">{{user.email}}</td>
     </ng-container>
 
-    <!-- Created column -->
+    <!-- Created date column -->
+     <!-- Use the date:"medium" pipe for formatting -->
     <ng-container matColumnDef="created">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Created</th>
       <td mat-cell *matCellDef="let user">{{user.created | date:"medium"}}</td>
@@ -31,11 +32,11 @@
       <th mat-header-cell *matHeaderCellDef>Ban Status</th>
       <td mat-cell *matCellDef="let user">
         <button *ngIf="!user.isBanned" class="ban-button" (click)="toggleBanStatus(user)">
-          <img src="../../../assets/ban.png" class="ban-image" alt="Ban user icon" />
+          <img src="../../../assets/ban.png" class="ban-image" alt="Ban user {{user.email}}" />
         </button>
 
         <button *ngIf="user.isBanned" class="unban-button" (click)="toggleBanStatus(user)">
-          <img src="../../../assets/unban.png" class="ban-image" alt="Unban user icon" />
+          <img src="../../../assets/unban.png" class="ban-image" alt="Unban user {{user.email}}" />
         </button>
       </td>
     </ng-container>

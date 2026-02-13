@@ -16,6 +16,7 @@ export class AddUserPageComponent implements OnInit {
     "confirmPassword": ["", Validators.required]
   });
 
+  // Getters for createUserForm values
   get email() {
     return this.createUserForm.get("email") as FormControl;
   }
@@ -32,6 +33,7 @@ export class AddUserPageComponent implements OnInit {
     this.headerService.setHeaderText("Create User");
   }
 
+  // Creates a new user account in the backend with the submitted form values
   createAccount() {
     this.accountService.createAccount(this.email.value, this.password.value, this.confirmPassword.value, Role.User).subscribe();
   }

@@ -14,34 +14,41 @@ import { CommonModule } from '@angular/common';
     ReactiveFormsModule,
     FormsModule
   ],
-  standalone: true
+  standalone: true    // Standalone since the settings page is shared by the user and admin modules
 })
 export class SettingsPageComponent implements OnInit {
+  // Individual form controls for individual editing
+  // Populate email field with the email of the current user (or admin)
   email = new FormControl(this.accountService.accountValue?.email, Validators.required);
   password = new FormControl("", Validators.required);
   confirmPassword = new FormControl("", Validators.required);
+  // React-esque state to declaratively show different sections of the page that can be
+  // editingEmail, editingPassword, or viewing
   public editingState: BehaviorSubject<string> = new BehaviorSubject("viewing");
 
   constructor(private headerService: HeaderService, private accountService: AccountService) { }
 
   ngOnInit(): void {
     this.headerService.setHeaderText("Settings");
+    // Enable/disable inputs every time editingState changes
     this.editingState.subscribe((state) => this.toggleInputs(state));
   }
 
+  // Update the user's email by sending the new valid email to the backend
   updateEmail() {
-    if (this.email.value === "") {
+    if (this.email.value === "" || !this.email.value?.includes("@")) {
       return;
     }
 
     const updateObject = {
       email: this.email.value
     };
-
     this.accountService.updateAccount(this.accountService.accountValue?.id!, updateObject).subscribe(() => console.log("updated email"));
     this.editingState.next("viewing");
   }
 
+  // Change the user's password by sending a request to the backend
+  // and make sure the passwords match
   updatePassword() {
     if (this.password.value !== this.confirmPassword.value) {
       return;
@@ -61,6 +68,7 @@ export class SettingsPageComponent implements OnInit {
     this.accountService.logout();
   }
 
+  // Enable/disable the appropriate inputs depending on the current editingState
   private toggleInputs(state: string) {
     switch (state) {
       case "viewing":

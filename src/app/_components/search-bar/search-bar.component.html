@@ -1,3 +1,5 @@
 <div class="search-bar">
-  <input name="search-bar" class="search-input" (input)="updateSearchTerm(searchBar.value)" placeholder="Search recipes..." #searchBar />
+  <label for="search-bar-input">
+    <input id="search-bar-input" name="search-bar-input" class="search-input" (input)="updateSearchTerm(searchBar.value)" placeholder="Search recipes..." #searchBar />
+  </label>
 </div>

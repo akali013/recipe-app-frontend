@@ -6,8 +6,6 @@
     <sub>Source: {{imageSource}}</sub>
   </div>
 
-  <h1>{{selectedRecipe.name}}</h1>
-
   <div class="ingredients-section">
     <h2>Ingredients</h2>
     <ul class="ingredients-list">
@@ -20,7 +18,7 @@
       <h2>Instructions</h2>
 
       <button class="step-button" (click)="previousStep()">
-        <img src="../../assets/previous.png" alt="Previous step button icon" />
+        <img src="../../assets/previous.png" alt="Move to instruction {{stepIndex}}" />
 
         <div class="button-tooltip">
           Previous Step
@@ -28,7 +26,7 @@
       </button>
 
       <button class="step-button" (click)="nextStep()">
-        <img src="../../assets/next.png" alt="Next step button icon" />
+        <img src="../../assets/next.png" alt="Move to instruction {{stepIndex + 1}}" />
 
         <div class="button-tooltip">
           Next Step

@@ -4,6 +4,6 @@ export interface Recipe {
   type: string;
   ingredients: string[];
   instructions: string[];
-  source: string;
+  source: string;   // Can be either a url from the MealsDB API or a user id
   imageUrl: string;
 }

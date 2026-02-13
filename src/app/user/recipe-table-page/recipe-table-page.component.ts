@@ -13,8 +13,12 @@ import { RecipeService } from '../../_services/recipe.service';
   styleUrls: ['./recipe-table-page.component.css']
 })
 export class RecipeTablePageComponent implements OnInit {
-  tableColumns = ["name", "type", "favorite"];    // Columns to display on the table (name is used instead of recipe for sorting)
-  recipeDataSource!: MatTableDataSource<Recipe>;
+  // Columns to display on the table 
+  // name - recipe's name
+  // type - recipe's type
+  // favorite - placeholder for favorite button
+  tableColumns = ["name", "type", "favorite"];    
+  recipeDataSource!: MatTableDataSource<Recipe>;    // MatTableDataSource holds Recipe objects and allows table filtering, sorting, and pagination
 
   // Implement table pagination and sorting
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -27,18 +31,22 @@ export class RecipeTablePageComponent implements OnInit {
     this.getRecipes();
   }
 
+  // Get all recipes from the backend and populate the table with them
   getRecipes() {
     this.recipeService.getRecipes().subscribe(recipes => {
       this.recipeDataSource = new MatTableDataSource(recipes);
+      // Enable pagination and sorting
       this.recipeDataSource.paginator = this.paginator;
       this.recipeDataSource.sort = this.sort;
     });
   }
 
+  // Filter the table rows based on the input in the search bar
   searchRecipes(term: string | Event) {
     this.recipeDataSource.filter = term.toString().trim().toLowerCase();
   }
 
+  // Navigate to the recipe-details-page to show the details of the selected recipe via its id
   inspectRecipe(recipe: Recipe) {
     this.router.navigate([`/user/recipes/${recipe.id}`]);
   }

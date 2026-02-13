@@ -1,8 +1,10 @@
+// Angular modules
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { UserRoutingModule } from './user-routing.module';
 
+// User module components
+import { UserRoutingModule } from './user-routing.module';
 import { AddRecipePageComponent } from './add-recipe-page/add-recipe-page.component';
 import { FavoritesPageComponent } from './favorites-page/favorites-page.component';
 import { RecipeDetailsPageComponent } from './recipe-details-page/recipe-details-page.component';
@@ -13,13 +15,13 @@ import { UserLayoutComponent } from './user-layout/user-layout.component';
 // Standalone components
 import { SearchBarComponent } from '../_components/search-bar/search-bar.component';
 import { HeaderComponent } from '../_components/header/header.component';
+import { SettingsPageComponent } from '../_general-pages/settings-page/settings-page.component';
 
-// Angular material
+// Angular Material components
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { SettingsPageComponent } from '../_general-pages/settings-page/settings-page.component';
 
 @NgModule({
   declarations: [

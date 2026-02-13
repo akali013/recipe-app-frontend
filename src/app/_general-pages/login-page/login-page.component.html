@@ -1,19 +1,21 @@
 <form class="login-form" [formGroup]="loginForm" (ngSubmit)="login()">
   <h1>Login</h1>
   
+  <!-- Email input -->
   <div class="form-input-container">
-    <label for="email-input-s">
+    <label for="email-input-login">
       Email:
     </label>
-    <input id="email-input-s" name="email-input-s" class="form-input" type="text" placeholder="Email..." formControlName="email"
+    <input id="email-input-login" name="email-input-login" class="form-input" type="text" placeholder="Email..." formControlName="email"
       required />
   </div>
 
+  <!-- Password input -->
   <div class="form-input-container">
-    <label for="password-input-s">
+    <label for="password-input-login">
       Password:
     </label>
-    <input id="password-input-s" name="password-input-s" class="form-input" type="password" placeholder="Password..." formControlName="password"
+    <input id="password-input-login" name="password-input-login" class="form-input" type="password" placeholder="Password..." formControlName="password"
       required />
   </div>
 

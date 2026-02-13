@@ -17,7 +17,7 @@ export class AdminEditUserComponent implements OnInit {
   // Name - recipe's name
   // Delete - header for every delete recipe button
   tableColumns: string[] = ["name", "delete"];
-  userRecipesDataSource!: MatTableDataSource<Recipe>;
+  userRecipesDataSource!: MatTableDataSource<Recipe>;   // MatTableDataSource stores Recipe objects and allows table filtering, sorting, and pagination
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -30,10 +30,13 @@ export class AdminEditUserComponent implements OnInit {
   }
 
   // Retrieve only this user's recipes from the backend and populate the table with them
-  // via the selected user's id
+  // using the user's id in the url
   getUserRecipes() {
     this.recipeService.getUserRecipes(this.route.snapshot.paramMap.get("id")!).subscribe((recipes: Recipe[]) => {
+      // When the user's recipes are retrieved, populate the table and enable sorting and pagination
       this.userRecipesDataSource = new MatTableDataSource(recipes);
+      this.userRecipesDataSource.paginator = this.paginator;
+      this.userRecipesDataSource.sort = this.sort;
     });
   }
 
