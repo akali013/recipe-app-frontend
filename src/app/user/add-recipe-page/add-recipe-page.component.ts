@@ -4,11 +4,13 @@ import { RecipeService } from '../../_services/recipe.service';
 import { Recipe } from 'src/app/_models/recipe';
 import { HeaderService } from '../../_services/header.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { PopupService } from 'src/app/_services/popup.service';
 
 @Component({
   selector: 'app-add-recipe-page',
   templateUrl: './add-recipe-page.component.html',
-  styleUrls: ['./add-recipe-page.component.css']
+  styleUrls: ['./add-recipe-page.component.css', "./_add-recipe-page-theme.scss"]
 })
 export class AddRecipePageComponent implements OnInit {
   recipeData: FormData = new FormData();    // Form data to be sent to the backend via the multipart/form type that allows files
@@ -49,7 +51,14 @@ export class AddRecipePageComponent implements OnInit {
     return this.recipeForm.get("imageUrl") as FormControl;
   }
 
-  constructor(private fb: FormBuilder, private recipeService: RecipeService, private headerService: HeaderService, private sanitizer: DomSanitizer) { }
+  constructor(
+    private fb: FormBuilder,
+    private recipeService: RecipeService,
+    private headerService: HeaderService,
+    private sanitizer: DomSanitizer,
+    private router: Router,
+    private popupService: PopupService
+  ) { }
 
   ngOnInit(): void {
     this.headerService.setHeaderText("Add a Recipe");
@@ -58,11 +67,25 @@ export class AddRecipePageComponent implements OnInit {
   // Adds an ingredient input to the ingredients section
   addIngredient() {
     this.ingredients.push(new FormControl("", Validators.required));
+
+    // Scroll to the newly added ingredient
+    document.querySelector(".last-ingredient")?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+      inline: 'center'
+    });
   }
 
   // Adds an instruction input to the instructions section
   addInstruction() {
     this.instructions.push(new FormControl("", Validators.required));
+
+    // Scroll to the newly added instruction
+    document.querySelector(".last-instruction")?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+      inline: 'center'
+    });
   }
 
   // Removes the specified ingredient
@@ -76,6 +99,23 @@ export class AddRecipePageComponent implements OnInit {
   }
 
   createRecipe() {
+    if (this.name.value === "") {
+      this.showErrorPopup("A recipe name is required.");
+      return;
+    }
+    if (this.type.value === "") {
+      this.showErrorPopup("A recipe type is required.");
+      return;
+    }
+    if (this.ingredients.controls.length === 0) {
+      this.showErrorPopup("A recipe must have at least 1 ingredient.");
+      return;
+    }
+    if (this.instructions.controls.length === 0) {
+      this.showErrorPopup("A recipe must have at least 1 instruction.");
+      return;
+    }
+
     // Prepare form data to be sent to the backend
     this.recipeData.set("name", this.name.value);
     this.recipeData.set("type", this.type.value);
@@ -83,7 +123,11 @@ export class AddRecipePageComponent implements OnInit {
     this.recipeData.set("instructions", this.instructions.value);
     this.recipeData.set("imageUrl", this.imageUrl.value);
 
-    this.recipeService.createRecipe(this.recipeData).subscribe(recipe => console.log(recipe));
+    this.recipeService.createRecipe(this.recipeData).subscribe(() => {
+      this.router.navigate(["/user/recipes"]).then(() => {
+        this.showConfirmationPopup("Recipe successfully created.");
+      });
+    });
   }
 
   // Shows a preview of the user's selected image from their file system
@@ -93,10 +137,10 @@ export class AddRecipePageComponent implements OnInit {
       this.blobUrl = URL.createObjectURL(event.target.files[0]);
       // Sanitize the blobUrl into a SafeUrl so that Angular can show the preview image
       this.previewUrl = this.sanitizer.bypassSecurityTrustUrl(this.blobUrl);
-  
+
       // Include the file name and extension in the form data
       this.imageUrl.setValue(event.target.files[0].name);
-       // The third parameter will be the filename under the Content-Disposition header so .NET's IFormFile can retrieve it and the file extension
+      // The third parameter will be the filename under the Content-Disposition header so .NET's IFormFile can retrieve it and the file extension
       this.recipeData.set("recipeImage", event.target.files[0], this.imageUrl.value);
     }
   }
@@ -118,5 +162,13 @@ export class AddRecipePageComponent implements OnInit {
     ];
 
     return imageTypes.includes(file.type);
+  }
+
+  private showConfirmationPopup(message: string) {
+    this.popupService.showPopup(message, "confirmation");
+  }
+
+  private showErrorPopup(message: string) {
+    this.popupService.showPopup(message, "error");
   }
 }

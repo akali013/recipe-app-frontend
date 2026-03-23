@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-admin-sidebar-content',
   templateUrl: './admin-sidebar-content.component.html',
-  styleUrls: ['./admin-sidebar-content.component.css']
+  styleUrls: ['./admin-sidebar-content.component.css', "./_admin-sidebar-content-theme.scss"]
 })
 export class AdminSidebarContentComponent implements OnInit {
   @Input() sidebar!: MatSidenav;    // Accept the sidenav object from admin-layout so it can be toggled

@@ -24,6 +24,7 @@ import { AccountService } from './_services/account.service';
 
 // Angular Material components
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PopupComponent } from './_components/popup/popup.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppComponent,
     LoginPageComponent,
     SignupPageComponent,
+    PopupComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,8 +40,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    UserModule,
-    AdminModule
   ],
   providers: [
     { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AccountService] },    // Run appinitializer on app startup, declare account service as a dependency

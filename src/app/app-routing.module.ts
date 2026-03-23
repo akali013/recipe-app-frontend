@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: "user", loadChildren: userModule, canActivate: [AuthGuard], data: { roles: [Role.User] } },
   // Use /admin to enter admin module components; requires a logged in admin account
   { path: 'admin', loadChildren: adminModule, canActivate: [AuthGuard], data: { roles: [Role.Admin] } },
-  { path: "**", redirectTo: "user", pathMatch: "full" }   // Redirect any other urls to the user module
+  { path: "**", redirectTo: "user", pathMatch: "full" }
 ];
 
 @NgModule({

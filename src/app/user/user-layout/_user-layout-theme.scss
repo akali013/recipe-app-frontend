@@ -1,0 +1,71 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@mixin color($theme) {
+  // Get the color config from the theme defined in custom-theme.scss
+  $color-config: mat.get-color-config($theme);
+
+  // Get color palettes from the color-config
+  $primary-palette: map.get($color-config, "primary");
+  $accent-palette: map.get($color-config, "accent");
+
+  // General styles for the user module components
+  mat-sidenav {
+    background-color: mat.get-color-from-palette($primary-palette, 400);
+  }
+
+  // Background color
+  mat-sidenav-content {
+    background-color: mat.get-color-from-palette($primary-palette, 100);
+  }
+
+  h1 {
+    color: mat.get-color-from-palette($accent-palette, 700);
+  }
+
+  h2 {
+    color: black;
+  }
+
+  label {
+    color: black;
+  }
+
+  input {
+    background-color: mat.get-color-from-palette($accent-palette, 300);
+    color: black;
+  }
+
+  input::placeholder {
+    color: black;
+  }
+
+  td,
+  th {
+    color: black;
+  }
+
+  td:focus {
+    color: mat.get-color-from-palette($accent-palette, 400);
+  }
+
+  table,
+  .mat-paginator {
+    background-color: mat.get-color-from-palette($accent-palette, 200);
+    color: black;
+  }
+}
+
+// Theme mixin to include both color and typography from custom-theme.scss
+@mixin theme($theme) {
+  $color-config: mat.get-color-config($theme);
+
+  @if $color-config !=null {
+    @include color($theme);
+  }
+
+  // $typography-config: mat.get-typography-config($theme);
+  // @if $typography-config != null {
+  //   @include typography($theme);
+  // }
+}

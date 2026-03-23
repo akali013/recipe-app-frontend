@@ -5,8 +5,8 @@ import { HeaderService } from '../../_services/header.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css'],
-  standalone: true    // Make standalone since this is shared between the user and admin modules
+  styleUrls: ['./header.component.css', "./_header-theme.scss"],
+  standalone: true
 })
 export class HeaderComponent implements OnInit {
   // Accept a user sidebar or admin sidebar with their respective navigation buttons

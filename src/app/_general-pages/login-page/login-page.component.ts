@@ -4,11 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Account } from 'src/app/_models/account';
 import { Role } from 'src/app/_models/role';
 import { AccountService } from 'src/app/_services/account.service';
+import { PopupService } from 'src/app/_services/popup.service';
 
 @Component({
   selector: 'app-login-page',
   templateUrl: './login-page.component.html',
-  styleUrls: ['./login-page.component.css']
+  styleUrls: ['./login-page.component.css', "./_login-page-theme.scss"]
 })
 export class LoginPageComponent implements OnInit {
   // Create a form to store and send the user's email and password
@@ -18,7 +19,13 @@ export class LoginPageComponent implements OnInit {
   });
   account: Account | null = this.accountService.accountValue;   // Currently logged in user info or lack thereof
 
-  constructor(private fb: FormBuilder, private accountService: AccountService, private router: Router, private route: ActivatedRoute) { }
+  constructor(
+    private fb: FormBuilder, 
+    private accountService: AccountService, 
+    private router: Router, 
+    private route: ActivatedRoute,
+    private popupService: PopupService
+  ) { }
 
   ngOnInit(): void {
     // Redirect any authenticated user to the recipes table when they try to access the login page 
@@ -32,6 +39,11 @@ export class LoginPageComponent implements OnInit {
   }
 
   login() {
+    // All passwords must be at least 8 characters long 
+    if (this.loginForm.get("password")?.value.length < 8) {
+      this.showErrorPopup("Invalid email or password.");
+    }
+
     // Make a login request to the backend with the form data
     this.accountService.login(this.loginForm.get("email")?.value, this.loginForm.get("password")?.value).subscribe(
       () => {
@@ -52,5 +64,9 @@ export class LoginPageComponent implements OnInit {
         }
       }
     );
+  }
+
+  private showErrorPopup(message: string) {
+    this.popupService.showPopup(message, "error");
   }
 }

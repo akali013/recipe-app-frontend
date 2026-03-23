@@ -39,7 +39,7 @@
         Ingredient {{i + 1}}:
       </label>
       <div class="removable-input-container">
-        <input type="text" id="ingredient-input-{{i + 1}}" name="ingredient-input-{{i + 1}}" class="removable-input" placeholder="Add ingredient..."
+        <input type="text" id="ingredient-input-{{i + 1}}" name="ingredient-input-{{i + 1}}" class="removable-input" [class.last-ingredient]="i + 1 === ingredients.controls.length" placeholder="Add ingredient..."
           [formControlName]="i" />
 
         <button class="remove-input-button" (click)="removeIngredient(i)" type="button">
@@ -61,7 +61,7 @@
       </label>
 
       <div class="removable-input-container">
-        <input type="text" id="instruction-input-{{i + 1}}" name="instruction-input-{{i + 1}}" class="removable-input" placeholder="Add instruction..."
+        <input type="text" id="instruction-input-{{i + 1}}" name="instruction-input-{{i + 1}}" class="removable-input" [class.last-instruction]="i + 1 === instructions.controls.length" placeholder="Add instruction..."
           [formControlName]="i" />
 
         <button type="button" class="remove-input-button" (click)="removeInstruction(i)">

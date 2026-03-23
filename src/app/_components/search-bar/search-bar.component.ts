@@ -3,8 +3,8 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'app-search-bar',
   templateUrl: './search-bar.component.html',
-  styleUrls: ['./search-bar.component.css'],
-  standalone: true    // Make standalone since multiple modules can use this generic search bar
+  styleUrls: ['./search-bar.component.css', "./_search-bar-theme.scss"],
+  standalone: true
 })
 export class SearchBarComponent implements OnInit {
   // Make an event called "searchEvent" available to any parent components

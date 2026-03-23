@@ -1,4 +1,9 @@
 <div class="sidebar-content">
+  <!-- Button to close the sidenav to prevent keyboard traps -->
+   <button class="close-button" (click)="this.sidebar.close()">
+    <img class="close-icon" src="../../../assets/back.png" alt="Close sidenav bar" />
+   </button>
+
   <!-- Navigation buttons for the recipes table, users table, and settings page -->
   <button class="navigation-button" (click)="goToPage('/recipes')">
     <img src="../../assets/list.png" alt="Go to recipes table" />

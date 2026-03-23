@@ -8,7 +8,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 @Component({
   selector: 'app-recipe-details-page',
   templateUrl: './recipe-details-page.component.html',
-  styleUrls: ['./recipe-details-page.component.css']
+  styleUrls: ['./recipe-details-page.component.css', "./_recipe-details-page-theme.scss"]
 })
 export class RecipeDetailsPageComponent implements OnInit {
   selectedRecipe!: Recipe;
@@ -26,7 +26,6 @@ export class RecipeDetailsPageComponent implements OnInit {
   getRecipe() {
     const id = this.route.snapshot.paramMap.get("id")!;
 
-    // Get the selected recipe from the backend via its id
     this.recipeService.getRecipeById(id).subscribe(recipe => {
       // Determine if the source is user-generated (localhost) or a MealsDB API link
       if (recipe.imageUrl.includes("localhost:")) {
@@ -42,14 +41,24 @@ export class RecipeDetailsPageComponent implements OnInit {
     });
   }
 
-  // Decrements the step index to move back a step and cycles through the instructions if necessary
+  // Iterate through the instruction steps and put the current instruction step into focus
   previousStep() {
     this.stepIndex - 1 > -1 ? this.stepIndex-- : this.stepIndex = this.selectedRecipe.instructions.length - 1;
+    document.querySelector(".current-step")?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+      inline: 'center'
+    });
   }
 
   // Increments the step index to move forward a step and cycles through the instructions if necessary
   nextStep() {
     this.stepIndex + 1 < this.selectedRecipe.instructions.length ? this.stepIndex++ : this.stepIndex = 0;
+    document.querySelector(".current-step")?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+      inline: 'center'
+    });
   }
 
   // Determine if the recipe source is missing, a url (API url), or a Guid (User)

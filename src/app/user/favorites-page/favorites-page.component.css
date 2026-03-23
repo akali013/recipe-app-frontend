@@ -4,22 +4,11 @@ th {
 
 td,
 th {
-  font-size: 18px;
-  color: white;
+  font-size: 1.2rem;
 }
 
 td {
   cursor: pointer;
-}
-
-td:hover {
-  color: #81D3DE;
-}
-
-table,
-.mat-paginator {
-  background-color: #004F56;
-  color: white;
 }
 
 .favorites-table-container {

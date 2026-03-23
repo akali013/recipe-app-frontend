@@ -1,11 +1,6 @@
-h1 {
-  font-size: 36px;
-  margin: 0;
-}
-
 label {
   margin-top: 10px;
-  font-size: 28px;
+  font-size: 1.6rem;
   margin-bottom: 5px;
 }
 
@@ -16,7 +11,6 @@ button {
 
 .add-recipe-form {
   padding: 2% 3%;
-  font-family: "Hanken Grotesk";
 }
 
 .form-input-container {
@@ -33,10 +27,8 @@ button {
 .recipe-image-label {
   border: none;
   border-radius: 50px;
-  background-color: #324B4E;
-  color: white;
-  font-size: 22px;
-  padding: 20px;
+  font-size: 1.5rem;
+  padding: 1.5rem;
   cursor: pointer;
   margin-top: 3vh;
 }
@@ -56,17 +48,10 @@ button {
 
 .form-input,
 .removable-input {
-  background-color: #00363C;
-  color: white;
-  font-size: 22px;
+  font-size: 1.3rem;
   font-family: "Hanken Grotesk";
   border: none;
   padding: 1%;
-}
-
-.form-input::placeholder,
-.removable-input::placeholder {
-  color: white;
 }
 
 #recipe-name-input {
@@ -86,9 +71,8 @@ button {
 .remove-input-button {
   border: none;
   border-radius: 50%;
-  background-color: #324B4E;
-  width: 50px;
-  height: 50px;
+  width: 4rem;
+  height: 4rem;
 }
 
 .remove-input-image {
@@ -98,12 +82,10 @@ button {
 .add-ingredient-button,
 .add-instruction-button {
   margin-top: 10px;
-  padding: 15px 20px;
-  font-size: 22px;
+  padding: 1rem 1.4rem;
+  font-size: 1.4rem;
   border-radius: 30px;
   border: none;
-  background-color: #324B4E;
-  color: #CDE7EB;
   margin-right: 2%;
 }
 
@@ -114,12 +96,10 @@ button {
 }
 
 .submit-button {
-  background-color: #23304D;
-  color: #B9C6EA;
   border: none;
   border-radius: 18px;
-  font-size: 35px;
-  padding: 15px 10px;
-  font-style: italic;
+  font-size: 2rem;
+  padding: 1rem;
   font-weight: 500;
+  font-family: "Hanken Grotesk";
 }

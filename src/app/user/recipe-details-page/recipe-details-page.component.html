@@ -3,11 +3,13 @@
 <div class="details-container" *ngIf="!isLoading">
   <div class="recipe-image-container">
     <img class="recipe-image" [src]="recipeImageUrl" alt="Image of {{selectedRecipe.name}}" />
-    <sub>Source: {{imageSource}}</sub>
+    <sub class="mat-caption">Source: {{imageSource}}</sub>
   </div>
 
+  <h2>{{selectedRecipe.name}}</h2>
+
   <div class="ingredients-section">
-    <h2>Ingredients</h2>
+    <h3>Ingredients</h3>
     <ul class="ingredients-list">
       <li *ngFor="let ingredient of selectedRecipe.ingredients">{{ingredient}}</li>
     </ul>
@@ -15,7 +17,7 @@
 
   <div class="instructions-section">
     <div class="step-tracker-container">
-      <h2>Instructions</h2>
+      <h3>Instructions</h3>
 
       <button class="step-button" (click)="previousStep()">
         <img src="../../assets/previous.png" alt="Move to instruction {{stepIndex}}" />
@@ -40,6 +42,6 @@
   </div>
 
   <div class="source-container">
-    <p class="source" *ngIf="selectedRecipe.source">Source: {{getRecipeSourceText()}}</p>
+    <p class="source mat-caption" *ngIf="selectedRecipe.source">Source: {{getRecipeSourceText()}}</p>
   </div>
 </div>

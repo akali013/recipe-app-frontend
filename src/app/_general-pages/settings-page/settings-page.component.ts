@@ -4,11 +4,13 @@ import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { AccountService } from 'src/app/_services/account.service';
 import { BehaviorSubject } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { PopupService } from 'src/app/_services/popup.service';
 
 @Component({
   selector: 'app-settings-page',
   templateUrl: './settings-page.component.html',
-  styleUrls: ['./settings-page.component.css'],
+  styleUrls: ['./settings-page.component.css', "./_settings-page-theme.scss"],
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -26,7 +28,11 @@ export class SettingsPageComponent implements OnInit {
   // editingEmail, editingPassword, or viewing
   public editingState: BehaviorSubject<string> = new BehaviorSubject("viewing");
 
-  constructor(private headerService: HeaderService, private accountService: AccountService) { }
+  constructor(
+    private headerService: HeaderService, 
+    private accountService: AccountService, 
+    private popupService: PopupService
+  ) { }
 
   ngOnInit(): void {
     this.headerService.setHeaderText("Settings");
@@ -37,20 +43,35 @@ export class SettingsPageComponent implements OnInit {
   // Update the user's email by sending the new valid email to the backend
   updateEmail() {
     if (this.email.value === "" || !this.email.value?.includes("@")) {
+      this.showErrorPopup("A valid email is required.");
       return;
     }
 
     const updateObject = {
       email: this.email.value
     };
-    this.accountService.updateAccount(this.accountService.accountValue?.id!, updateObject).subscribe(() => console.log("updated email"));
+
+    this.accountService.updateAccount(this.accountService.accountValue?.id!, updateObject).subscribe(() => {
+      this.showConfirmationPopup("Email successfully updated!");
+    });
     this.editingState.next("viewing");
   }
 
   // Change the user's password by sending a request to the backend
   // and make sure the passwords match
   updatePassword() {
+    if (this.password.value === "") {
+      this.showErrorPopup("A password is required.");
+      return;
+    }
+
+    if (this.password.value!.length < 8) {
+      this.showErrorPopup("Your password must be at least 8 characters long.");
+      return;
+    }
+
     if (this.password.value !== this.confirmPassword.value) {
+      this.showErrorPopup("Your passwords must match.");
       return;
     }
 
@@ -60,7 +81,9 @@ export class SettingsPageComponent implements OnInit {
       confirmPassword: this.confirmPassword.value
     };
 
-    this.accountService.updateAccount(this.accountService.accountValue?.id!, updateObject).subscribe(() => console.log("updated info"));
+    this.accountService.updateAccount(this.accountService.accountValue?.id!, updateObject).subscribe(() => {
+      this.showConfirmationPopup("Password successfully updated!");
+    });
     this.editingState.next("viewing");
   }
 
@@ -87,5 +110,13 @@ export class SettingsPageComponent implements OnInit {
         this.confirmPassword.enable();
         break;
     }
+  }
+
+  showConfirmationPopup(confirmationMessage: string) {
+    this.popupService.showPopup(confirmationMessage, "confirmation");
+  }
+
+  showErrorPopup(errorMessage: string) {
+    this.popupService.showPopup(errorMessage, "error");
   }
 }
