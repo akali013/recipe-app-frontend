@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-user-layout',
   templateUrl: './user-layout.component.html',
-  styleUrls: ['./user-layout.component.css']
+  styleUrls: ['./user-layout.component.css', "./_user-layout-theme.scss"]
 })
 export class UserLayoutComponent implements OnInit {
   // This component is a parent component that brings the sidebar, header, and any user module component together 

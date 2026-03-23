@@ -10,7 +10,7 @@ import { HeaderService } from 'src/app/_services/header.service';
 @Component({
   selector: 'app-admin-users-table',
   templateUrl: './admin-users-table.component.html',
-  styleUrls: ['./admin-users-table.component.css']
+  styleUrls: ['./admin-users-table.component.css', "./_admin-users-table-theme.scss"]
 })
 export class AdminUsersTableComponent implements OnInit {
   // Define table columns to be shown
@@ -19,7 +19,7 @@ export class AdminUsersTableComponent implements OnInit {
   // created: user's creation date
   // updated: date and time when user was last updated
   // ban: user's ban status
-  tableColumns = ["id", "email", "created", "updated", "ban"];  
+  tableColumns = ["id", "email", "created", "updated", "ban"];
   usersDataSource!: MatTableDataSource<Account>;    // MatTableDataSource stores Account objects and allows table filtering, sorting, and pagination
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -48,12 +48,17 @@ export class AdminUsersTableComponent implements OnInit {
   }
 
   // When a user is clicked, go to the admin-edit-user page to see their details
-  inspectUser(user: Account) {
-    this.router.navigate([`admin/edit-user/${user.id}`]);
+  // The event parameter enables keyboard accessibility by inspecting a user via a
+  // click (no event), Enter key, or Spacebar
+  inspectUser(user: Account, event?: KeyboardEvent) {
+    if (!event || event.key === "Enter" || event.key === " ") {
+      this.router.navigate([`admin/edit-user/${user.id}`]);
+    }
   }
 
   // Rather than delete a user, update their ban status
-  toggleBanStatus(user: Account) {
+  toggleBanStatus(user: Account, clickEvent: Event) {
+    clickEvent.stopPropagation();   // Prevent going to the edit user page
     this.accountService.updateAccount(user.id!, { "Email": user.email, "IsBanned": !user.isBanned }).subscribe((updatedUser) => {
       // Rerender the table with the updated user
       this.usersDataSource.data = this.usersDataSource.data.map(u => {

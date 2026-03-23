@@ -9,7 +9,7 @@ import { HeaderService } from '../../_services/header.service';
 @Component({
   selector: 'app-favorites-page',
   templateUrl: './favorites-page.component.html',
-  styleUrls: ['./favorites-page.component.css']
+  styleUrls: ['./favorites-page.component.css', "./_favorites-page-theme.scss"]
 })
 export class FavoritesPageComponent implements OnInit, AfterViewInit {
   tableColumns = ["name", "type", "remove"];

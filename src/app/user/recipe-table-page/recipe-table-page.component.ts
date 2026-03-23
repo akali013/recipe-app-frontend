@@ -10,14 +10,14 @@ import { RecipeService } from '../../_services/recipe.service';
 @Component({
   selector: 'app-recipe-table-page',
   templateUrl: './recipe-table-page.component.html',
-  styleUrls: ['./recipe-table-page.component.css']
+  styleUrls: ['./recipe-table-page.component.css', "./_recipe-table-page-theme.scss"]
 })
 export class RecipeTablePageComponent implements OnInit {
   // Columns to display on the table 
   // name - recipe's name
   // type - recipe's type
   // favorite - placeholder for favorite button
-  tableColumns = ["name", "type", "favorite"];    
+  tableColumns = ["name", "type", "favorite"];
   recipeDataSource!: MatTableDataSource<Recipe>;    // MatTableDataSource holds Recipe objects and allows table filtering, sorting, and pagination
 
   // Implement table pagination and sorting
@@ -47,7 +47,11 @@ export class RecipeTablePageComponent implements OnInit {
   }
 
   // Navigate to the recipe-details-page to show the details of the selected recipe via its id
-  inspectRecipe(recipe: Recipe) {
-    this.router.navigate([`/user/recipes/${recipe.id}`]);
+  // Takes a KeyboardEvent to detect when the keyboard is used to select a recipe from the table
+  inspectRecipe(recipe: Recipe, event?: KeyboardEvent) {
+    // Clicking (no event), Enter, or Spacebar selects a recipe
+    if (!event || event.key === "Enter" || event.key === " ") {
+      this.router.navigate([`/user/recipes/${recipe.id}`]);
+    }
   }
 }

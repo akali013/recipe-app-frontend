@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-sidebar-content',
   templateUrl: './sidebar-content.component.html',
-  styleUrls: ['./sidebar-content.component.css']
+  styleUrls: ['./sidebar-content.component.css', "./_sidebar-content-theme.scss"]
 })
 export class SidebarContentComponent implements OnInit {
   // Accept the sidenav object from the user layout to close it when the user switches pages

@@ -5,16 +5,13 @@
 }
 
 .search-input {
-  font-size: 26px;
+  font-size: 1.5rem;
   padding: 1.5%;
   width: 75vw;
-  color: white;
-  background-color: #004F56;
   border: none;
   border-radius: 50px;
 }
 
 .search-input::placeholder {
-  color: white;
   opacity: 0.5;
 }

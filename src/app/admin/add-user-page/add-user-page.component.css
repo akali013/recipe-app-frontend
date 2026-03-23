@@ -1,20 +1,17 @@
 label {
-  font-size: 20px;
+  font-size: 1.4rem;
   font-weight: 500;
   margin-bottom: 5px;
 }
 
 input {
-  background-color: #00363C;
-  color: white;
-  font-size: 16px;
+  font-size: 1.2rem;
   border: none;
-  padding: 2%;
+  padding: 1%;
 }
 
 input::placeholder {
-  color: white;
-  font-size: 16px;
+  font-size: 1.2rem;
 }
 
 .create-user-form {
@@ -40,10 +37,8 @@ input::placeholder {
 }
 
 .create-button {
-  padding: 10px 15px;
-  font-size: 20px;
-  color: #CDE7EB;
-  background-color: #324B4E;
+  padding: 0.6rem 1rem;
+  font-size: 1.4rem;
   border: none;
   cursor: pointer;
 }

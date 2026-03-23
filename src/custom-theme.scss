@@ -1,35 +1,207 @@
-
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
 @use '@angular/material' as mat;
-// Plus imports for other components in your app.
+// General components
+@use "./app/_components/header/header-theme" as header;
+@use "./app/_components/search-bar/search-bar-theme" as searchBar;
+@use "./app/_general-pages/login-page/login-page-theme" as loginPage;
+@use "./app/_general-pages/settings-page/settings-page-theme" as settingsPage;
+@use "./app/_general-pages/signup-page/signup-page-theme" as signUpPage;
+@use "./app/_components/popup/popup-theme" as popup;
+// Admin module components
+@use "./app/admin/admin-layout/admin-layout-theme" as adminLayout;
+@use "./app/admin/add-user-page/add-user-page-theme" as addUserPage;
+@use "./app/admin/admin-recipe-details/admin-recipe-details-theme" as adminRecipeDetailsPage;
+@use "./app/admin/admin-recipe-table/admin-recipe-table-theme" as adminRecipeTablePage;
+@use "./app/admin/admin-sidebar-content/admin-sidebar-content-theme" as adminSidebarContent;
+@use "./app/admin/admin-users-table/admin-users-table-theme" as adminUsersTablePage;
+// User module components
+@use "./app/user/user-layout/user-layout-theme" as userLayout;
+@use "./app/user/add-recipe-page/add-recipe-page-theme" as addRecipePage;
+@use "./app/user/favorites-page/favorites-page-theme" as favoritesPage;
+@use "./app/user/recipe-details-page/recipe-details-page-theme" as recipeDetailsPage;
+@use "./app/user/recipe-table-page/recipe-table-page-theme" as recipeTablePage;
+@use "./app/user/sidebar-content/sidebar-content-theme" as userSidebarContent;
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
-@include mat.core();
+// Define app-wide typography styles
+$typography-config: mat.define-typography-config(
+  $headline: mat.define-typography-level(         // h1 style
+    $font-family: "Oregano",
+    $font-weight: 600,
+    $font-size: 4rem,
+    $line-height: 1,
+    $letter-spacing: normal
+  ),
+  $title: mat.define-typography-level(         // h2 style
+    $font-family: "Hanken Grotesk",
+    $font-weight: 600,
+    $font-size: 3rem,
+    $line-height: 1,
+    $letter-spacing: normal
+  ),
+  $subheading-2: mat.define-typography-level(         // h3 style
+    $font-family: "Hanken Grotesk",
+    $font-weight: 400,
+    $font-size: 2rem,
+    $line-height: 1,
+    $letter-spacing: normal
+  ),
+  $subheading-1: mat.define-typography-level(         // h4 style
+    $font-family: "Hanken Grotesk",
+    $font-weight: 400,
+    $font-size: 2rem,
+    $line-height: 1,
+    $letter-spacing: normal
+  ),
+  $body-1: mat.define-typography-level(         // default body text style
+    $font-family: "Hanken Grotesk",
+    $font-size: 1rem,
+    $line-height: 1,
+    $letter-spacing: normal
+  ),
+  $caption: mat.define-typography-level(         // smaller hint text style
+    $font-family: "Hanken Grotesk",
+    $font-weight: 300,
+    $font-size: 1rem,
+    $line-height: 1,
+    $letter-spacing: normal
+  ),
+  $button: mat.define-typography-level(         // button text style
+    $font-family: "Hanken Grotesk",
+    $font-weight: 600,
+    $font-size: 1.2rem,
+    $line-height: 1,
+    $letter-spacing: normal
+  ),
+  $input: mat.define-typography-level(         // form input style
+    $font-family: "Hanken Grotesk",
+    $font-size: 1.2rem,
+    $line-height: 1,
+    $letter-spacing: normal
+  )
+);
 
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$recipe-app-frontend-primary: mat.define-palette(mat.$indigo-palette);
-$recipe-app-frontend-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+// Standard Angular Material theming for common effects like ripples
+@include mat.core($typography-config);    // Apply typography config to all Angular Material components
+// Use strong focus indicators for WCAG
+@include mat.strong-focus-indicators((border-width: 5px));
 
-// The warn palette is optional (defaults to red).
-$recipe-app-frontend-warn: mat.define-palette(mat.$red-palette);
+// Define primary, accent, and warn palettes
+$primary-palette: (
+  50: #F1FFF6,
+  100: #DCFFE8,
+  200: #C4FFD8,
+  300: #A8FFC6,
+  400: #92FFB7,
+  500: #7DFCA8,
+  600: #76EC9D,
+  700: #6AD78E,
+  800: #61C581,
+  900: #50A26A,
+  contrast: (50: rgba(black, 1),
+    100: rgba(black, 1),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: rgba(black, 0.87),
+    500: rgba(black, 0.8),
+    600: rgba(black, 0.8),
+    700: rgba(white, 0.87),
+    800: rgba(white, 0.9),
+    900: rgba(white, 1))
+);
 
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
-$recipe-app-frontend-theme: mat.define-light-theme((
+$accent-palette: (
+  50: #FFF1FA,
+  100: #FFDCF2,
+  200: #FEB0D1,
+  300: #FF8FBD,
+  400: #FF6FAF,
+  500: #FF559D,
+  600: #FF549C,
+  700: #FF4A91,
+  800: #F64387,
+  900: #E93579,
+  contrast: (50: rgba(black, 1),
+    100: rgba(black, 1),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: rgba(black, 0.87),
+    500: rgba(black, 0.8),
+    600: rgba(black, 0.8),
+    700: rgba(white, 0.87),
+    800: rgba(white, 0.9),
+    900: rgba(white, 1))
+);
+
+$warn-palette: (
+  50: #F6F1FF,
+  100: #E8DDFF,
+  200: #DAC6FF,
+  300: #CAACFF,
+  400: #BB96FF,
+  500: #AE81FF,
+  600: #A37AFD,
+  700: #946FF2,
+  800: #8969E9,
+  900: #775BDA,
+  contrast: (50: rgba(black, 1),
+    100: rgba(black, 1),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: rgba(black, 0.87),
+    500: rgba(black, 0.8),
+    600: rgba(black, 0.8),
+    700: rgba(white, 0.87),
+    800: rgba(white, 0.9),
+    900: rgba(white, 1))
+);
+
+// Palettes for light mode theme with default, lighter, and darker hues provided
+$light-primary-palette: mat.define-palette($primary-palette, 200, 50, 700);
+$light-accent-palette: mat.define-palette($accent-palette, 200, 50, 700);
+$light-warn-palette: mat.define-palette($warn-palette, 200, 50, 700);
+
+// Create light mode theme with the light mode palettes
+$light-theme: mat.define-light-theme((
   color: (
-    primary: $recipe-app-frontend-primary,
-    accent: $recipe-app-frontend-accent,
-    warn: $recipe-app-frontend-warn,
+    primary: $light-primary-palette,
+    accent: $light-accent-palette,
+    warn: $light-warn-palette 
   )
 ));
 
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include mat.all-component-themes($recipe-app-frontend-theme);
+// Apply the light theme by default
 
+// Emit theme-dependent styles for common features like ripples used across multiple Angular Material components under the light theme 
+@include mat.core-theme($light-theme);
+// Enable strong focus indication for WCAG with a color matching the default hue of the primary palette
+@include mat.strong-focus-indicators-theme($light-theme);
+
+// Style Angular Material mat-tables
+@include mat.table-theme($light-theme);
+
+// Style custom components with the light theme
+@include header.theme($light-theme);
+@include searchBar.theme($light-theme);
+@include loginPage.theme($light-theme);
+@include settingsPage.theme($light-theme);
+@include signUpPage.theme($light-theme);
+@include adminLayout.theme($light-theme);
+@include addUserPage.theme($light-theme);
+@include adminRecipeDetailsPage.theme($light-theme);
+@include adminRecipeTablePage.theme($light-theme);
+@include adminSidebarContent.theme($light-theme);
+@include adminUsersTablePage.theme($light-theme);
+@include userLayout.theme($light-theme);
+@include addRecipePage.theme($light-theme);
+@include favoritesPage.theme($light-theme);
+@include recipeDetailsPage.theme($light-theme);
+@include recipeTablePage.theme($light-theme);
+@include userSidebarContent.theme($light-theme);
+@include popup.theme($light-theme);
+
+// Apply a dark theme when .dark-theme is applied to the body
+.dark-theme {
+  // @include mat.core-theme($dark-theme);
+  // @include mat.table-theme($dark-theme);
+
+  // @include mat-string-focus-indicators-theme($dark-theme);
+}

@@ -1,5 +1,3 @@
-/* You can add global styles to this file, and also import other style files */
-
 html,
 body {
   height: 100%;
@@ -7,6 +5,6 @@ body {
 
 body {
   margin: 0;
-  background-color: #81D3DE;
   font-family: "Hanken Grotesk", "Arial";
+  position: relative;       /* For popup positioning at the bottom right of the page */
 }

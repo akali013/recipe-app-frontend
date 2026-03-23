@@ -1,0 +1,51 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@mixin color($theme) {
+  // Get the color config from the theme defined in custom-theme.scss
+  $color-config: mat.get-color-config($theme);
+
+  // Get color palettes from the color-config
+  $primary-palette: map.get($color-config, "primary");
+  $accent-palette: map.get($color-config, "accent");
+  $warn-palette: map.get($color-config, "warn");
+
+  .recipe-image-label {
+    background-color: mat.get-color-from-palette($accent-palette, 300);
+    color: black;
+  }
+
+  .recipe-image-label:focus {
+    border: 2px solid mat.get-color-from-palette($accent-palette, "darker");
+  }
+  
+  .remove-input-button {
+    background-color: mat.get-color-from-palette($warn-palette, 300);
+    color: black;
+  }
+
+  .add-ingredient-button,
+  .add-instruction-button {
+    background-color: mat.get-color-from-palette($warn-palette, 300);
+    color: black;
+  }
+
+  .submit-button {
+    background-color: mat.get-color-from-palette($warn-palette, 500);
+    color: black;
+  }
+}
+
+// Theme mixin to include both color and typography from custom-theme.scss
+@mixin theme($theme) {
+  $color-config: mat.get-color-config($theme);
+
+  @if $color-config !=null {
+    @include color($theme);
+  }
+
+  // $typography-config: mat.get-typography-config($theme);
+  // @if $typography-config != null {
+  //   @include typography($theme);
+  // }
+}

@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Recipe } from 'src/app/_models/recipe';
 import { HeaderService } from 'src/app/_services/header.service';
+import { PopupService } from 'src/app/_services/popup.service';
 import { RecipeService } from 'src/app/_services/recipe.service';
 
 @Component({
   selector: 'app-admin-recipe-details',
   templateUrl: './admin-recipe-details.component.html',
-  styleUrls: ['./admin-recipe-details.component.css']
+  styleUrls: ['./admin-recipe-details.component.css', "./_admin-recipe-details-theme.scss"]
 })
 export class AdminRecipeDetailsComponent implements OnInit {
   selectedRecipe?: Recipe   // Recipe for the current page
@@ -54,7 +55,14 @@ export class AdminRecipeDetailsComponent implements OnInit {
     return this.recipeForm.get("imageUrl") as FormControl;
   }
 
-  constructor(private fb: FormBuilder, private recipeService: RecipeService, private route: ActivatedRoute, private sanitizer: DomSanitizer, private headerService: HeaderService) { }
+  constructor(
+    private fb: FormBuilder,
+    private recipeService: RecipeService,
+    private route: ActivatedRoute,
+    private sanitizer: DomSanitizer,
+    private headerService: HeaderService,
+    private popupService: PopupService
+  ) { }
 
   ngOnInit(): void {
     this.headerService.setHeaderText("Edit Recipe");
@@ -85,11 +93,25 @@ export class AdminRecipeDetailsComponent implements OnInit {
   // Adds a new form control to the ingredients form array
   addIngredient() {
     this.ingredients.push(this.fb.control("", Validators.required));
+
+    // Scroll to the newly added ingredient 
+    document.querySelector(".last-ingredient")?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+      inline: 'center'
+    });
   }
 
   // Adds a new form control to the instructions form array
   addInstruction() {
     this.instructions.push(this.fb.control("", Validators.required));
+
+    // Scroll to the newly added instruction 
+    document.querySelector(".last-instruction")?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+      inline: 'center'
+    });
   }
 
   // Removes the specified ingredient from the form
@@ -107,30 +129,56 @@ export class AdminRecipeDetailsComponent implements OnInit {
     // Check that only image files are submitted
     if (!event.target.files[0] || !this.fileIsImage(event.target.files[0])) return;
 
-    // Encode the preview image data into a readable blob url
-    this.blobUrl = URL.createObjectURL(event.target.files[0]);
-    // Sanitize the blobUrl into a SafeUrl so that Angular can show the preview image
-    this.previewUrl = this.sanitizer.bypassSecurityTrustUrl(this.blobUrl);
-
-    // Store the file name and extension in the imageUrl form field
-    this.imageUrl.setValue(event.target.files[0].name);
-    // Prepare the image to be sent to the backend where
-    // the third parameter will be the file name under the Content-Disposition header 
-    // so .NET's IFormFile can retrieve it and the file extension
-    this.recipeData.set("recipeImage", event.target.files[0], this.imageUrl.value);
+    if (event.target.files[0] && this.fileIsImage(event.target.files[0])) {
+      this.blobUrl = URL.createObjectURL(event.target.files[0]);
+      // Sanitize the blobUrl into a SafeUrl so that Angular can show the preview image
+      this.previewUrl = this.sanitizer.bypassSecurityTrustUrl(this.blobUrl);
+      // Store the blobUrl instead of the previewUrl since it is a string and not a SafeUrl
+      this.imageUrl.setValue(this.blobUrl);
+      this.recipeData.set("recipeImage", this.imageUrl.value);
+    }
+    else {
+      this.showErrorPopup("The recipe image must be a valid image file. Ex: .jpg, .gif, .png, etc.");
+    }
   }
 
   updateRecipe() {
-    // Load recipe information into the FormData object so it can be picked up by the .NET [FromForm] controller attribute 
-    this.recipeData.set("id", this.selectedRecipe?.id!);
-    this.recipeData.set("name", this.name.value);
-    this.recipeData.set("type", this.type.value);
-    this.recipeData.set("ingredients", this.ingredients.value);
-    this.recipeData.set("instructions", this.instructions.value);
-    this.recipeData.set("source", this.source.value);
+    // Form validation checks
+    if (this.name.value === "") {
+      this.showErrorPopup("Recipe name is required.");
+      return;
+    }
 
-    // Update call to backend
-    this.recipeService.updateRecipe(this.selectedRecipe?.id!, this.recipeData).subscribe();
+    if (this.type.value === "") {
+      this.showErrorPopup("Recipe type is required.");
+      return;
+    }
+
+    if (this.ingredients.value.length === 0) {
+      this.showErrorPopup("Recipe ingredients are required.");
+      return;
+    }
+
+    if (this.instructions.value.length === 0) {
+      this.showErrorPopup("Recipe instructions are required.");
+      return;
+    }
+
+    if (this.source.value === "") {
+      this.showErrorPopup("Recipe source is required.");
+      return;
+    }
+      this.recipeData.set("id", this.selectedRecipe?.id!);
+      this.recipeData.set("name",  this.name.value);
+      this.recipeData.set("type",  this.type.value);
+      this.recipeData.set("ingredients",  this.ingredients.value);
+      this.recipeData.set("instructions",  this.instructions.value);
+      this.recipeData.set("source",  this.source.value);
+      this.recipeData.set("imageUrl",  this.imageUrl.value);
+
+    this.recipeService.updateRecipe(this.selectedRecipe?.id!, this.recipeData).subscribe(() => {
+      this.showConfirmationPopup("Recipe successfully edited!");
+    });
   }
 
   // Checks if the file parameter has any of the supported image file types
@@ -150,5 +198,13 @@ export class AdminRecipeDetailsComponent implements OnInit {
     ];
 
     return fileTypes.includes(file.type);
+  }
+
+  showConfirmationPopup(confirmationMessage: string) {
+    this.popupService.showPopup(confirmationMessage, "confirmation");
+  }
+  
+  showErrorPopup(errorMessage: string) {
+    this.popupService.showPopup(errorMessage, "error");
   }
 }

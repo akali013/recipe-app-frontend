@@ -36,7 +36,7 @@
             Ingredient {{i + 1}}:
           </label>
           <input id="ingredient-input-{{i}}" name="ingredient-input-{{i}}" class="ingredient-input" type="text"
-            placeholder="Enter ingredient {{i + 1}}..." [formControlName]="i" />
+            placeholder="Enter ingredient {{i + 1}}..." [formControlName]="i" [class.last-ingredient]="i + 1 === ingredients.controls.length" />
 
           <button class="delete-button" type="button" (click)="removeIngredient(i)">
             <img class="delete-icon" src="../../../assets/delete.png" alt="Delete ingredient {{i + 1}}" />
@@ -59,7 +59,7 @@
             Instruction {{i + 1}}:
           </label>
           <input id="instruction-input-{{i}}" name="instruction-input-{{i}}" class="instruction-input" type="text"
-            placeholder="Enter instruction {{i + 1}}..." [formControlName]="i" />
+            placeholder="Enter instruction {{i + 1}}..." [formControlName]="i" [class.last-instruction]="i + 1 === instructions.controls.length" />
 
           <button class="delete-button" type="button" (click)="removeInstruction(i)">
             <img class="delete-icon" src="../../../assets/delete.png" alt="Delete instruction {{i + 1}}" />

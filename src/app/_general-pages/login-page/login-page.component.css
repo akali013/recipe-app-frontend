@@ -1,22 +1,19 @@
 h1 {
-  font-family: "Oregano";
-  font-size: 80px;
   text-align: center;
-  color: #00363C;
   margin: 0;
+  margin-bottom: 3%;
 }
 
 label {
-  color: #00363C;
-  font-size: 20px;
+  font-size: 1.5rem;
   font-weight: 400;
   margin-bottom: 10px;
 }
 
 button {
-  font-size: 20px;
-  width: 180px;
-  height: 60px;
+  font-size: 1.4rem;
+  width: 12rem;
+  height: 4rem;
   border: none;
   border-radius: 18px;
   margin-top: 2vh;
@@ -36,9 +33,7 @@ button {
 }
 
 .form-input {
-  background-color: #00363C;
-  color: #9DF0FB;
-  font-size: 20px;
+  font-size: 1.2rem;
   padding: 2%;
   width: 60vw;
   margin-bottom: 2vh;
@@ -46,17 +41,9 @@ button {
 }
 
 .form-input::placeholder {
-  color: #9DF0FB;
-  font-size: 20px;
+  font-size: 1.2rem;
 }
 
 .login-button {
-  background-color: #324B4E;
-  color: #CDE7EB;
   margin-top: 10vh;
-}
-
-.signup-button {
-  background-color: #B9C6EA;
-  color: #23304D;
 }

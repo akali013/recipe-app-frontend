@@ -5,25 +5,31 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Recipe } from 'src/app/_models/recipe';
 import { HeaderService } from 'src/app/_services/header.service';
+import { PopupService } from 'src/app/_services/popup.service';
 import { RecipeService } from 'src/app/_services/recipe.service';
 
 @Component({
   selector: 'app-admin-recipe-table',
   templateUrl: './admin-recipe-table.component.html',
-  styleUrls: ['./admin-recipe-table.component.css']
+  styleUrls: ['./admin-recipe-table.component.css', "./_admin-recipe-table-theme.scss"]
 })
 export class AdminRecipeTableComponent implements OnInit {
   // Columns to be shown on the table
   // name: Recipe's name
   // author: Recipe's source that can be a user id, MealsDB API link, or unknown (N/A)
   // delete: Header for all delete recipe buttons
-  tableColumns = ["name", "author", "delete"];    
+  tableColumns = ["name", "author", "delete"];
   recipeDataSource!: MatTableDataSource<Recipe>;    // MatTableDataSource stores Recipe objects and allows table filtering, sorting, and pagination
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private recipeService: RecipeService, private headerService: HeaderService, private router: Router) { }
+  constructor(
+    private recipeService: RecipeService,
+    private headerService: HeaderService,
+    private router: Router,
+    private popupService: PopupService
+  ) { }
 
   ngOnInit(): void {
     this.headerService.setHeaderText("Recipes");
@@ -64,14 +70,24 @@ export class AdminRecipeTableComponent implements OnInit {
   }
 
   // Deletes a recipe from the backend
-  deleteRecipe(recipe: Recipe) {
-    this.recipeService.deleteRecipe(recipe).subscribe();
+  deleteRecipe(recipe: Recipe, clickEvent: Event) {
+    clickEvent.stopPropagation();     // Prevent going to the recipes page
+    this.recipeService.deleteRecipe(recipe).subscribe(() => {
+      this.showConfirmationPopup("Recipe deleted!");
+      this.getRecipes();
+    });
   }
 
-  // Goes to the admin-recipe-details page that shows the
-  // info about the selected recipe
-  inspectRecipe(recipe: Recipe) {
-    this.router.navigate([`admin/recipes/${recipe.id}`]);
+  // Goes to the admin-recipe-details page that shows the info about the selected recipe
+  // Keyboard accessibility added via the event parameter where admins select recipes
+  // via a click (no event), Enter key, or Spacebar
+  inspectRecipe(recipe: Recipe, event?: KeyboardEvent) {
+    if (!event || event.key === "Enter" || event.key === " ") {
+      this.router.navigate([`admin/recipes/${recipe.id}`]);
+    }
   }
 
+  showConfirmationPopup(message: string) {
+    this.popupService.showPopup(message, "confirmation");
+  }
 }

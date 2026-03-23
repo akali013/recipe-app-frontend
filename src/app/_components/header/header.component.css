@@ -1,16 +1,8 @@
-h1 {
-  font-size: 56px;
-  font-weight: 500;
-  color: #81D3DE;
-}
-
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  font-family: "Oregano";
-  background-color: #004F56;
   padding: 0 3%;
 
   position: sticky;
@@ -23,4 +15,8 @@ h1 {
   background-color: transparent;
   border: none;
   cursor: pointer;
+}
+
+.menu-image {
+  width: 150%;
 }
