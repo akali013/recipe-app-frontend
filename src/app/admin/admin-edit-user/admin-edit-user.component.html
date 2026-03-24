@@ -1,18 +1,21 @@
 <div class="page-container">
-  <form class="edit-user-form">
+  <form class="edit-user-form" [formGroup]="userForm" (ngSubmit)="editUser()">
     <h2>Credentials:</h2>
     <div class="form-input-container">
       <label for="edit-email-input">
         Email:
       </label>
       <div class="editable-input-container">
-        <input id="edit-email-input" name="edit-email-input" placeholder="Edit email here..." />
-        <button class="edit-button">
-          <img class="edit-icon" src="../../../assets/edit.png" alt="Icon for edit email button" />
+        <input id="edit-email-input" name="edit-email-input" placeholder="Edit email here..." formControlName="email" />
+        <button class="edit-button" type="button" (click)="editEmail()">
+          <img class="edit-icon" src="../../../assets/edit.png" alt="Edit email" />
         </button>
       </div>
     </div>
-    <button class="save-button" type="submit">
+    <button class="cancel-button" type="button" *ngIf="formState === 'editingEmail'" (click)="this.formState = 'viewing'">
+      Cancel
+    </button>
+    <button class="save-button" type="submit" *ngIf="formState === 'editingEmail'">
       Save
     </button>
 
@@ -21,38 +24,51 @@
         Password:
       </label>
       <div class="editable-input-container">
-        <input id="edit-password-input" name="edit-password-input" placeholder="Edit password here..." />
-        <button class="edit-button">
-          <img class="edit-icon" src="../../../assets/edit.png" alt="Icon for edit password button" />
+        <input id="edit-password-input" name="edit-password-input" type="password" placeholder="Change password here..." formControlName="password" />
+        <button class="edit-button" type="button" (click)="editPassword()">
+          <img class="edit-icon" src="../../../assets/edit.png" alt="Edit password" />
         </button>
       </div>
     </div>
-    <button class="save-button" type="submit">
+
+    <div class="form-input-container" *ngIf="formState === 'editingPassword'">
+      <label for="retype-password-input">
+        Retype password:
+      </label>
+      <input id="retype-password-input" name="retype-password-input" type="password" placeholder="Retype password..." formControlName="retypePassword" />
+    </div>
+
+    <button class="cancel-button" type="button" *ngIf="formState === 'editingPassword'" (click)="this.formState = 'viewing'">
+      Cancel
+    </button>
+    <button class="save-button" type="submit" *ngIf="formState === 'editingPassword'">
       Save
     </button>
   </form>
 
   <!-- Table for the recipes the user has created -->
+  <h2>Created Recipes:</h2>
   <div class="created-recipes-table-container">
-    <table mat-table [dataSource]="userRecipesDataSource" matSort aria-label="table">
+    <table mat-table [dataSource]="userRecipesDataSource" matSort aria-label="Created recipes" role="grid">
       <!-- Recipe name column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Recipe</th>
-        <td mat-cell *matCellDef="let recipe">{{recipe.name}}</td>
+        <td mat-cell *matCellDef="let recipe" tabindex="0">{{recipe.name}}</td>    <!-- tabindex=0 makes recipe cells tabbable -->
       </ng-container>
 
       <!-- Delete column -->
       <ng-container matColumnDef="delete">
         <th mat-header-cell *matHeaderCellDef>Delete</th>
         <td mat-cell *matCellDef="let recipe">
-          <button class="delete-button" (click)="deleteRecipe(recipe)">
-            <img src="../../../assets/delete.png" class="delete-image" alt="Icon for delete {{recipe.name}} recipe button" />
+          <button class="delete-button" (click)="deleteRecipe(recipe, $event)" (keydown)="deleteRecipe(recipe, $event)">
+            <img src="../../../assets/delete.png" class="delete-image"
+              alt="Delete {{recipe.name}} recipe" />
           </button>
         </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
-      <tr mat-row *matRowDef="let recipe; columns: tableColumns" (click)="inspectRecipe(recipe)"></tr>
+      <tr mat-row *matRowDef="let recipe; columns: tableColumns" (click)="inspectRecipe(recipe)" (keydown)="inspectRecipe(recipe, $event)"></tr>
     </table>
 
     <mat-paginator [pageSizeOptions]="[5, 10, 20]" aria-label="Select page of user's recipes"></mat-paginator>
