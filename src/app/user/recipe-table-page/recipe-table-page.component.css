@@ -29,3 +29,14 @@ td {
 .mat-column-favorite {
   width: 10%;
 }
+
+.favorite-button,
+.unfavorite-button {
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+}
+
+.unfavorite-icon {
+  width: 80%;
+}

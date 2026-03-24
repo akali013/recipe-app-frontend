@@ -71,3 +71,8 @@ td, th {
 .mat-column-delete {
   width: 10vw;
 }
+
+.delete-button {
+  background-color: transparent;
+  border: none;
+}

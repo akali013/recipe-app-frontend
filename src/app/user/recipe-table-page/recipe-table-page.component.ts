@@ -6,6 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { HeaderService } from '../../_services/header.service';
 import { RecipeService } from '../../_services/recipe.service';
+import { AccountService } from 'src/app/_services/account.service';
 
 @Component({
   selector: 'app-recipe-table-page',
@@ -19,16 +20,23 @@ export class RecipeTablePageComponent implements OnInit {
   // favorite - placeholder for favorite button
   tableColumns = ["name", "type", "favorite"];
   recipeDataSource!: MatTableDataSource<Recipe>;    // MatTableDataSource holds Recipe objects and allows table filtering, sorting, and pagination
+  favoriteRecipes: Recipe[] = [];   // Tracks the current user's favorite recipes
 
   // Implement table pagination and sorting
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private router: Router, private headerService: HeaderService, private recipeService: RecipeService) { }
+  constructor(
+    private router: Router,
+    private headerService: HeaderService,
+    private recipeService: RecipeService,
+    private accountService: AccountService
+  ) { }
 
   ngOnInit(): void {
     this.headerService.setHeaderText("My Recipes");
     this.getRecipes();
+    this.getFavoriteRecipes();
   }
 
   // Get all recipes from the backend and populate the table with them
@@ -53,5 +61,35 @@ export class RecipeTablePageComponent implements OnInit {
     if (!event || event.key === "Enter" || event.key === " ") {
       this.router.navigate([`/user/recipes/${recipe.id}`]);
     }
+  }
+
+  // Gets all recipes favorited by the current user to track which recipes have already been favorited
+  getFavoriteRecipes() {
+    this.recipeService.getFavoriteRecipes(this.accountService.accountValue?.id!).subscribe(recipes => {
+      this.favoriteRecipes = recipes;
+    });
+  }
+
+  // Favorites/Unfavorites a recipe when the favorite button of the selected recipe is clicked
+  // Clicking or pressing Enter or Spacebar will toggle a recipe when the favorite button is in focus
+  toggleFavoriteRecipe(recipe: Recipe, event: MouseEvent | KeyboardEvent) {
+    event.stopPropagation();    // Prevents inspecting the selected recipe
+
+    if (event instanceof MouseEvent || (event instanceof KeyboardEvent && (event.key === "Enter" || event.key === " "))) {
+      this.recipeService.toggleFavoriteRecipe(recipe, this.accountService.accountValue?.id!).subscribe(() => {
+        this.getFavoriteRecipes();
+      });
+    }
+  }
+
+  // Checks if the recipe parameter is a favorite recipe to determine which button should be shown for a recipe
+  checkFavoriteRecipe(recipe: Recipe): boolean {
+    for (let i = 0; i < this.favoriteRecipes.length; i++) {
+      if (this.favoriteRecipes[i].id === recipe.id) {
+        return true;
+      }
+    }
+
+    return false;
   }
 }

@@ -70,12 +70,16 @@ export class AdminRecipeTableComponent implements OnInit {
   }
 
   // Deletes a recipe from the backend
-  deleteRecipe(recipe: Recipe, clickEvent: Event) {
-    clickEvent.stopPropagation();     // Prevent going to the recipes page
-    this.recipeService.deleteRecipe(recipe).subscribe(() => {
-      this.showConfirmationPopup("Recipe deleted!");
-      this.getRecipes();
-    });
+  // Clicking or pressing Enter or Spacebar will delete a recipe when the remove button is in focus
+  deleteRecipe(recipe: Recipe, event: MouseEvent | KeyboardEvent) {
+    event.stopPropagation();     // Prevent going to the recipes page
+
+    if (event instanceof MouseEvent || (event instanceof KeyboardEvent && (event.key === "Enter" || event.key === " "))) {
+      this.recipeService.deleteRecipe(recipe).subscribe(() => {
+        this.showConfirmationPopup("Recipe deleted!");
+        this.getRecipes();
+      });
+    }
   }
 
   // Goes to the admin-recipe-details page that shows the info about the selected recipe

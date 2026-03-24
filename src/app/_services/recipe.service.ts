@@ -83,6 +83,20 @@ export class RecipeService {
     );
   }
 
+  // Get all recipes favorited by the specified user via a GET request to /recipes/favorite/{id}
+  getFavoriteRecipes(userId: string): Observable<Recipe[]> {
+    return this.http.get<Recipe[]>(`${this.apiUrl}/favorite/${userId}`, {headers: this.headers, withCredentials: true}).pipe(
+      catchError(this.handleError("getFavoriteRecipes", [this.errorRecipe]))
+    );
+  }
+
+  // Favorites/Unfavorites a recipe for a user via a POST request to /recipes/favorite/{id}
+  toggleFavoriteRecipe(recipe: Recipe, userId: string): Observable<Recipe> {
+    return this.http.post<Recipe>(`${this.apiUrl}/favorite/${recipe.id}`, { userId }, { headers: this.headers, withCredentials: true }).pipe(
+      catchError(this.handleError("favoriteRecipe", this.errorRecipe))
+    );
+  }
+
   // Source: https://v14.angular.io/tutorial/toh-pt6
   // Handles errors from any calls made to the API
   private handleError<T>(operation = 'operation', result?: T) {

@@ -135,12 +135,16 @@ export class AdminEditUserComponent implements OnInit {
   }
 
   // Delete the user's recipe from the backend
-  deleteRecipe(recipe: Recipe, event: Event) {
+  // Clicking or pressing Enter or Spacebar will delete a recipe when the delete button is in focus
+  deleteRecipe(recipe: Recipe, event: MouseEvent | KeyboardEvent) {
     event.stopPropagation();      // Prevents inspecting the deleted recipe
-    this.recipeService.deleteRecipe(recipe).subscribe(() => {
-      this.showConfirmationPopup("Recipe deleted.");
-      this.getUserRecipes();      // Refresh the table
-    });
+
+    if (event instanceof MouseEvent || (event instanceof KeyboardEvent && (event.key === "Enter" || event.key === " "))) {
+      this.recipeService.deleteRecipe(recipe).subscribe(() => {
+        this.showConfirmationPopup("Recipe deleted.");
+        this.getUserRecipes();      // Refresh the table
+      });
+    }
   }
 
   showConfirmationPopup(message: string) {
