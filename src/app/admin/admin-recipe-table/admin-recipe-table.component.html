@@ -24,7 +24,7 @@
     <ng-container matColumnDef="delete">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Delete?</th>
       <td mat-cell *matCellDef="let recipe">
-        <button class="delete-button" (click)="deleteRecipe(recipe, $event)">
+        <button class="delete-button" (click)="deleteRecipe(recipe, $event)" (keydown)="deleteRecipe(recipe, $event)">
           <img src="../../../assets/delete.png" class="delete-image" alt="Delete {{recipe.name}} recipe" />
         </button>
       </td>

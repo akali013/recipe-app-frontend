@@ -57,17 +57,21 @@ export class AdminUsersTableComponent implements OnInit {
   }
 
   // Rather than delete a user, update their ban status
-  toggleBanStatus(user: Account, clickEvent: Event) {
-    clickEvent.stopPropagation();   // Prevent going to the edit user page
-    this.accountService.updateAccount(user.id!, { "Email": user.email, "IsBanned": !user.isBanned }).subscribe((updatedUser) => {
-      // Rerender the table with the updated user
-      this.usersDataSource.data = this.usersDataSource.data.map(u => {
-        if (u.email === updatedUser.email) {
-          return updatedUser;
-        }
-        return u;
+  // Clicking or pressing Enter or Spacebar will ban/unban a user when the ban/unban button is in focus
+  toggleBanStatus(user: Account, event: MouseEvent | KeyboardEvent) {
+    event.stopPropagation();   // Prevent going to the edit user page
+
+    if (event instanceof MouseEvent || (event instanceof KeyboardEvent && (event.key === "Enter" || event.key === " "))) {
+      this.accountService.updateAccount(user.id!, { "Email": user.email, "IsBanned": !user.isBanned }).subscribe((updatedUser) => {
+        // Rerender the table with the updated user
+        this.usersDataSource.data = this.usersDataSource.data.map(u => {
+          if (u.email === updatedUser.email) {
+            return updatedUser;
+          }
+          return u;
+        });
       });
-    });
+    }
   }
 
 }
