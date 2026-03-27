@@ -37,7 +37,7 @@
     </div>
 
     <ol class="instructions-list">
-      <li *ngFor="let instruction of selectedRecipe.instructions;let i=index" [class.current-step]="i === stepIndex">{{instruction}}.</li>
+      <li *ngFor="let instruction of selectedRecipe.instructions;let i=index" [class.current-step]="i === stepIndex">{{instruction}}</li>
     </ol>
   </div>
 

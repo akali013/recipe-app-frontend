@@ -119,8 +119,14 @@ export class AddRecipePageComponent implements OnInit {
     // Prepare form data to be sent to the backend
     this.recipeData.set("name", this.name.value);
     this.recipeData.set("type", this.type.value);
-    this.recipeData.set("ingredients", this.ingredients.value);
-    this.recipeData.set("instructions", this.instructions.value);
+    // Add ingredients and instructions individually since FormData does not support sending arrays/
+    // .NET automatically binds repeated keys into a list
+    this.ingredients.value.forEach((ingredient: string) => {
+      this.recipeData.append("ingredients", ingredient);
+    });
+    this.instructions.value.forEach((instruction: string) => {
+      this.recipeData.append("instructions", instruction);
+    });
     this.recipeData.set("imageUrl", this.imageUrl.value);
 
     this.recipeService.createRecipe(this.recipeData).subscribe(() => {

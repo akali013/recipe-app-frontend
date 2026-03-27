@@ -168,13 +168,19 @@ export class AdminRecipeDetailsComponent implements OnInit {
       this.showErrorPopup("Recipe source is required.");
       return;
     }
-      this.recipeData.set("id", this.selectedRecipe?.id!);
-      this.recipeData.set("name",  this.name.value);
-      this.recipeData.set("type",  this.type.value);
-      this.recipeData.set("ingredients",  this.ingredients.value);
-      this.recipeData.set("instructions",  this.instructions.value);
-      this.recipeData.set("source",  this.source.value);
-      this.recipeData.set("imageUrl",  this.imageUrl.value);
+    this.recipeData.set("id", this.selectedRecipe?.id!);
+    this.recipeData.set("name", this.name.value);
+    this.recipeData.set("type", this.type.value);
+    // Add ingredients and instructions individually since FormData does not support sending arrays/
+    // .NET automatically binds repeated keys into a list
+    this.ingredients.value.forEach((ingredient: string) => {
+      this.recipeData.append("ingredients", ingredient);
+    });
+    this.instructions.value.forEach((instruction: string) => {
+      this.recipeData.append("instructions", instruction);
+    });
+    this.recipeData.set("source", this.source.value);
+    this.recipeData.set("imageUrl", this.imageUrl.value);
 
     this.recipeService.updateRecipe(this.selectedRecipe?.id!, this.recipeData).subscribe(() => {
       this.showConfirmationPopup("Recipe successfully edited!");
@@ -203,7 +209,7 @@ export class AdminRecipeDetailsComponent implements OnInit {
   showConfirmationPopup(confirmationMessage: string) {
     this.popupService.showPopup(confirmationMessage, "confirmation");
   }
-  
+
   showErrorPopup(errorMessage: string) {
     this.popupService.showPopup(errorMessage, "error");
   }
