@@ -22,6 +22,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatCardModule } from "@angular/material/card";
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
     MatSortModule,
     MatPaginatorModule,
     MatSidenavModule,
+    MatCardModule,
     SearchBarComponent,
     HeaderComponent,
     SettingsPageComponent

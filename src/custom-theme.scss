@@ -177,6 +177,7 @@ $light-theme: mat.define-light-theme((
 
 // Style Angular Material mat-tables
 @include mat.table-theme($light-theme);
+@include mat.card-theme($light-theme);
 
 // Style custom components with the light theme
 @include header.theme($light-theme);

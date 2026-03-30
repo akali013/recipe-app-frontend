@@ -5,7 +5,8 @@
     <!-- Recipe name column -->
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Recipe</th>
-      <td mat-cell *matCellDef="let recipe" tabindex="0">{{recipe.name}}</td>     <!-- tabindex=0 makes the recipe name tabbable -->
+      <td mat-cell *matCellDef="let recipe" tabindex="0">{{recipe.name}}</td>
+      <!-- tabindex=0 makes the recipe name tabbable -->
     </ng-container>
 
     <!-- Type column -->
@@ -19,19 +20,41 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Favorite</th>
       <td mat-cell *matCellDef="let recipe">
         <!-- Show either the favorite or unfavorite button depending on whether the recipe is favorited or not -->
-        <button class="favorite-button" (click)="toggleFavoriteRecipe(recipe, $event)" (keydown)="toggleFavoriteRecipe(recipe, $event)" *ngIf="!checkFavoriteRecipe(recipe)">
+        <button class="favorite-button" (click)="toggleFavoriteRecipe(recipe, $event)"
+          (keydown)="toggleFavoriteRecipe(recipe, $event)" *ngIf="!checkFavoriteRecipe(recipe)">
           <img class="favorite-icon" src="../../../assets/favorite.png" />
         </button>
 
-        <button class="unfavorite-button" (click)="toggleFavoriteRecipe(recipe, $event)" (keydown)="toggleFavoriteRecipe(recipe, $event)" *ngIf="checkFavoriteRecipe(recipe)">
+        <button class="unfavorite-button" (click)="toggleFavoriteRecipe(recipe, $event)"
+          (keydown)="toggleFavoriteRecipe(recipe, $event)" *ngIf="checkFavoriteRecipe(recipe)">
           <img class="unfavorite-icon" src="../../../assets/unfavorite.png" />
         </button>
       </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
-    <tr mat-row *matRowDef="let recipe; columns: tableColumns" (click)="inspectRecipe(recipe)" (keydown)="inspectRecipe(recipe, $event)"></tr>
+    <tr mat-row *matRowDef="let recipe; columns: tableColumns" (click)="inspectRecipe(recipe)"
+      (keydown)="inspectRecipe(recipe, $event)"></tr>
   </table>
 
   <mat-paginator [pageSizeOptions]="[5, 10, 20]" aria-label="Select page of recipes"></mat-paginator>
+</div>
+
+<h2 *ngIf="recentRecipes.length > 0">Recently Viewed Recipes</h2>
+<div class="recent-recipes-container" role="group">
+  <mat-card class="recent-recipe-card" tabindex="0" *ngFor="let recipe of recentRecipes">
+
+    <img mat-card-image class="card-image" [src]="recipe.imageUrl" alt="{{recipe.name}} recipe image" />
+    <mat-card-title class="card-title">{{recipe.name}}</mat-card-title>
+    <mat-card-subtitle>{{recipe.type}}</mat-card-subtitle>
+
+    <mat-card-actions align="end">
+      <button class="card-button">
+        <img src="../../../assets/view.png" alt="View {{recipe.name}} recipe" class="card-button-icon" (click)="inspectRecipe(recipe)" (keydown)="inspectRecipe(recipe, $event)"/> 
+      </button>
+      <button class="card-button" (click)="removeRecentRecipe(recipe)">
+        <img src="../../../assets/remove.png" alt="Remove {{recipe.name}} from recent recipes" class="card-button-icon" />
+      </button>
+    </mat-card-actions>
+  </mat-card>
 </div>

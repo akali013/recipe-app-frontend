@@ -21,6 +21,7 @@ export class RecipeTablePageComponent implements OnInit {
   tableColumns = ["name", "type", "favorite"];
   recipeDataSource!: MatTableDataSource<Recipe>;    // MatTableDataSource holds Recipe objects and allows table filtering, sorting, and pagination
   favoriteRecipes: Recipe[] = [];   // Tracks the current user's favorite recipes
+  recentRecipes: Recipe[] = [];    // Tracks the user's recently viewed recipes
 
   // Implement table pagination and sorting
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -37,6 +38,10 @@ export class RecipeTablePageComponent implements OnInit {
     this.headerService.setHeaderText("My Recipes");
     this.getRecipes();
     this.getFavoriteRecipes();
+
+    if (localStorage.getItem("recentRecipes")) {
+      this.recentRecipes = JSON.parse(localStorage.getItem("recentRecipes")!);
+    }
   }
 
   // Get all recipes from the backend and populate the table with them
@@ -57,6 +62,9 @@ export class RecipeTablePageComponent implements OnInit {
   // Navigate to the recipe-details-page to show the details of the selected recipe via its id
   // Takes a KeyboardEvent to detect when the keyboard is used to select a recipe from the table
   inspectRecipe(recipe: Recipe, event?: KeyboardEvent) {
+    // Add any new inspected recipe to the user's localstorage
+    this.addRecentRecipe(recipe);
+
     // Clicking (no event), Enter, or Spacebar selects a recipe
     if (!event || event.key === "Enter" || event.key === " ") {
       this.router.navigate([`/user/recipes/${recipe.id}`]);
@@ -91,5 +99,27 @@ export class RecipeTablePageComponent implements OnInit {
     }
 
     return false;
+  }
+
+  // Removes a recipe from the user's list of recent recipes in localStorage
+  removeRecentRecipe(recipe: Recipe) {
+    this.recentRecipes = this.recentRecipes.filter(r => r.name !== recipe.name);
+    localStorage.setItem("recentRecipes", JSON.stringify(this.recentRecipes));
+  }
+
+  // Adds a new recipe into the user's recent recipes stored in localStorage
+  private addRecentRecipe(recipe: Recipe) {
+    let isNew = true;
+    this.recentRecipes.forEach(r => {
+      if (r.name === recipe.name) {
+        isNew = false;
+        return;
+      }
+    });
+
+    if (isNew) {
+      this.recentRecipes.push(recipe);
+      localStorage.setItem("recentRecipes", JSON.stringify(this.recentRecipes));
+    }
   }
 }
