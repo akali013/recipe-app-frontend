@@ -1,0 +1,24 @@
+# Source: https://docs.docker.com/guides/angular/develop/
+
+services:
+  angular-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: akali013/recipe-app-frontend
+    environment:
+      NODE_ENV: production
+    ports:
+      - 8080:8080
+
+  angular-dev: 
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "4200:4200"
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
