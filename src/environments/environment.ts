@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: "http://localhost:5133"   // .NET API is hosted at port 5133
+  apiUrl: "http://localhost:30002"   // .NET API NodePort service is hosted at port 30002
 };
 
 /*
