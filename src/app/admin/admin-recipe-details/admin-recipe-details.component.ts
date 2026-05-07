@@ -135,7 +135,7 @@ export class AdminRecipeDetailsComponent implements OnInit {
       this.previewUrl = this.sanitizer.bypassSecurityTrustUrl(this.blobUrl);
       // Store the blobUrl instead of the previewUrl since it is a string and not a SafeUrl
       this.imageUrl.setValue(this.blobUrl);
-      this.recipeData.set("recipeImage", this.imageUrl.value);
+      this.recipeData.set("recipeImage", event.target.files[0]);
     }
     else {
       this.showErrorPopup("The recipe image must be a valid image file. Ex: .jpg, .gif, .png, etc.");
