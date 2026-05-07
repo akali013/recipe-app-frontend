@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Account } from 'src/app/_models/account';
 import { AccountService } from 'src/app/_services/account.service';
 import { HeaderService } from 'src/app/_services/header.service';
+import { PopupService } from 'src/app/_services/popup.service';
 
 @Component({
   selector: 'app-admin-users-table',
@@ -25,7 +26,7 @@ export class AdminUsersTableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private accountService: AccountService, private headerService: HeaderService, private router: Router) { }
+  constructor(private accountService: AccountService, private headerService: HeaderService, private router: Router, private popUpService: PopupService) { }
 
   ngOnInit(): void {
     this.headerService.setHeaderText("Users");
@@ -70,8 +71,14 @@ export class AdminUsersTableComponent implements OnInit {
           }
           return u;
         });
+
+        updatedUser.isBanned ? this.showConfirmationPopup("User banned!") : this.showConfirmationPopup("User unbanned!");
       });
     }
+  }
+
+  private showConfirmationPopup(message: string) {
+    this.popUpService.showPopup(message, "confirmation");
   }
 
 }

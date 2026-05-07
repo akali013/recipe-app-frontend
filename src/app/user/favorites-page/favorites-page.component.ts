@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { HeaderService } from '../../_services/header.service';
 import { RecipeService } from 'src/app/_services/recipe.service';
 import { AccountService } from 'src/app/_services/account.service';
+import { PopupService } from 'src/app/_services/popup.service';
 
 @Component({
   selector: 'app-favorites-page',
@@ -24,7 +25,8 @@ export class FavoritesPageComponent implements OnInit {
     private router: Router,
     private headerService: HeaderService,
     private recipeService: RecipeService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private popUpService: PopupService
   ) { }
 
   ngOnInit(): void {
@@ -65,8 +67,13 @@ export class FavoritesPageComponent implements OnInit {
       // Toggling an already favorited recipe unfavorites it
       this.recipeService.toggleFavoriteRecipe(recipe, this.accountService.accountValue?.id!).subscribe(() => {
         this.getFavoriteRecipes();    // Reload the table
+        this.showConfirmationPopup("Favorite removed!");
       });
     }
+  }
+
+  private showConfirmationPopup(message: string) {
+    this.popUpService.showPopup(message, "confirmation");
   }
 
 }

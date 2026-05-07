@@ -30,8 +30,8 @@ export class SignupPageComponent implements OnInit {
   }
 
   constructor(
-    private fb: FormBuilder, 
-    private accountService: AccountService, 
+    private fb: FormBuilder,
+    private accountService: AccountService,
     private router: Router,
     private popupService: PopupService
   ) { }
@@ -56,9 +56,10 @@ export class SignupPageComponent implements OnInit {
       return;
     }
 
-    this.accountService.register(this.email.value, this.password.value, this.retypePassword.value).subscribe();
-    this.router.navigate(["/login"]).then(() => {
-      this.showConfirmationPopup("Account successfully created!");
+    this.accountService.register(this.email.value, this.password.value, this.retypePassword.value).subscribe(() => {
+      this.router.navigate(["/login"]).then(() => {
+        this.showConfirmationPopup("Account successfully created!");
+      });
     });
   }
 
