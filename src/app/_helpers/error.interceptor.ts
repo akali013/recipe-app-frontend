@@ -13,7 +13,7 @@ import { PopupService } from '../_services/popup.service';
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
 
-  constructor(private accountService: AccountService, private router: Router, private popupService: PopupService) {}
+  constructor(private accountService: AccountService, private popupService: PopupService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     // Intercept any incoming errors from the backend
@@ -28,6 +28,10 @@ export class ErrorInterceptor implements HttpInterceptor {
         // Log the error message from the backend
         const error = (err && err.error && err.error.message) || err.statusText;
         console.error(err);
+
+        if (err.error.message && err.error.message !== "Invalid token") {
+            this.showErrorPopup(err.error.message);
+        }
         
         return throwError(() => error);
       })
