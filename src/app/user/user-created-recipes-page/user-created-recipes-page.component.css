@@ -1,0 +1,38 @@
+th {
+  font-weight: bold;
+}
+
+td, th {
+  font-size: 1.2rem;
+}
+
+td {
+  cursor: pointer;
+}
+
+.created-recipe-table-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 3%;
+}
+
+.mat-column-name {
+  width: 50%;
+}
+
+.mat-column-type {
+  width: 40%;
+}
+
+.mat-column-remove {
+  width: 10%;
+}
+
+.remove-button {
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+}
+

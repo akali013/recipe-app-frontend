@@ -6,7 +6,8 @@ import { RecipeDetailsPageComponent } from './recipe-details-page/recipe-details
 import { FavoritesPageComponent } from './favorites-page/favorites-page.component';
 import { AddRecipePageComponent } from './add-recipe-page/add-recipe-page.component';
 import { SettingsPageComponent } from '../_general-pages/settings-page/settings-page.component';
-import { AuthGuard } from '../_helpers/auth.guard';
+import { UserCreatedRecipesPageComponent } from './user-created-recipes-page/user-created-recipes-page.component';
+import { EditRecipePageComponent } from './edit-recipe-page/edit-recipe-page.component';
 
 
 // Defines all URLs under the user (/user) module
@@ -18,6 +19,8 @@ const routes: Routes = [
       { path: "recipes/:id", component: RecipeDetailsPageComponent },
       { path: "favorites", component: FavoritesPageComponent },
       { path: "add-recipe", component: AddRecipePageComponent },
+      { path: "created-recipes", component: UserCreatedRecipesPageComponent },
+      { path: "created-recipes/:id", component: EditRecipePageComponent },
       { path: "settings", component: SettingsPageComponent },
       { path: "**", redirectTo: "recipes", pathMatch: "full" }    // Redirect any unknown URLs to the recipes table
     ]

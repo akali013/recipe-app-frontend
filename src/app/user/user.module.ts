@@ -11,6 +11,8 @@ import { RecipeDetailsPageComponent } from './recipe-details-page/recipe-details
 import { RecipeTablePageComponent } from './recipe-table-page/recipe-table-page.component';
 import { SidebarContentComponent } from './sidebar-content/sidebar-content.component';
 import { UserLayoutComponent } from './user-layout/user-layout.component';
+import { UserCreatedRecipesPageComponent } from './user-created-recipes-page/user-created-recipes-page.component';
+import { EditRecipePageComponent } from './edit-recipe-page/edit-recipe-page.component';
 
 // Standalone components
 import { SearchBarComponent } from '../_components/search-bar/search-bar.component';
@@ -24,6 +26,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatCardModule } from "@angular/material/card";
 
+
 @NgModule({
   declarations: [
     AddRecipePageComponent,
@@ -32,6 +35,8 @@ import { MatCardModule } from "@angular/material/card";
     RecipeTablePageComponent,
     SidebarContentComponent,
     UserLayoutComponent,
+    UserCreatedRecipesPageComponent,
+    EditRecipePageComponent,
   ],
   imports: [
     CommonModule,

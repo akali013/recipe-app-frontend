@@ -46,16 +46,6 @@ td {
   align-items: center;
   overflow-x: scroll;
   margin: 2% 0;
-
-  /* Hide horizontal scrollbar for recent recipes container */
-  overflow-x: auto;   /* Enable horizontal scrolling */
-
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
-}
-
-.recent-recipes-container::-webkit-scrollbar {
-  display: none; /* For hiding horizontal scrollbar in Chrome, Safari browsers */
 }
 
 .recent-recipe-card {
@@ -64,8 +54,13 @@ td {
   padding-bottom: 1.5rem;
 }
 
+.card-image-container {
+  display: flex;
+  justify-content: center;
+}
+
 .card-image {
-  width: 15rem;
+  width: 100vw;
   object-fit: contain;
   object-position: center;
 }
