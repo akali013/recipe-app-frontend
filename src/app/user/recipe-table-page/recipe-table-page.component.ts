@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { HeaderService } from '../../_services/header.service';
 import { RecipeService } from '../../_services/recipe.service';
 import { AccountService } from 'src/app/_services/account.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-recipe-table-page',
@@ -35,7 +36,7 @@ export class RecipeTablePageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.headerService.setHeaderText("My Recipes");
+    this.headerService.setHeaderText("Recipes");
     this.getRecipes();
     this.getFavoriteRecipes();
 
@@ -120,6 +121,18 @@ export class RecipeTablePageComponent implements OnInit {
     if (isNew) {
       this.recentRecipes.push(recipe);
       localStorage.setItem("recentRecipes", JSON.stringify(this.recentRecipes));
+    }
+  }
+
+  // Resolves a recent recipe's image URL to either a MealDB API URL or a .NET-generated URL
+  getRecentRecipeImageUrl(recipe: Recipe) {
+    // MealDB API image URL
+    if (recipe.imageUrl.includes("mealdb")) {
+      return recipe.imageUrl;
+    }
+    // .NET API image URL
+    else {
+      return `${environment.apiUrl}/recipeImages/${recipe.imageUrl}`;
     }
   }
 }

@@ -1,0 +1,103 @@
+label {
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin-right: 1%;
+  white-space: nowrap;
+}
+
+input {
+  font-size: 1.2rem;
+  padding: 0.5%;
+  border: none;
+}
+
+.edit-recipe-form {
+  padding: 2%;
+}
+
+.recipe-image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 3%;
+  padding-left: 35%;
+}
+
+.recipe-image {
+  width: 30%;
+  margin-right: 5%;
+}
+
+.edit-button,
+.delete-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 100px;
+  width: 4rem;
+  height: 4rem;
+  font-size: 1.3rem;
+  border: none;
+  cursor: pointer;
+}
+
+.edit-button {
+  display: flex;
+  justify-content: center;
+}
+
+.edit-icon,
+.delete-icon {
+  width: 65%;
+}
+
+.form-input-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1%;
+}
+
+.ingredients-container,
+.instructions-container {
+  margin: 3% 0;
+}
+
+.ingredient-input-container,
+.instruction-input-container {
+  display: grid;
+  grid-template-columns: 10% 85% 5%;
+  align-items: center;
+  margin-top: 1%;
+}
+
+.ingredient-input,
+.instruction-input {
+  width: 90%;
+  margin-left: 2%;
+}
+
+.add-button,
+.submit-button {
+  padding: 0.6rem 1rem;
+  font-size: 1.4rem;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.instructions-list,
+.ingredients-list {
+  font-size: 1.8rem;
+}
+
+.submit-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 5%;
+}
+
+#edit-recipe-image-input {
+  opacity: 0;
+  pointer-events: none;
+}

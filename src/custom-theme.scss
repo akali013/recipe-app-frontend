@@ -20,6 +20,8 @@
 @use "./app/user/recipe-details-page/recipe-details-page-theme" as recipeDetailsPage;
 @use "./app/user/recipe-table-page/recipe-table-page-theme" as recipeTablePage;
 @use "./app/user/sidebar-content/sidebar-content-theme" as userSidebarContent;
+@use "./app/user/edit-recipe-page/edit-recipe-page-theme" as editRecipePage;
+@use "./app/user/user-created-recipes-page/user-created-recipes-page-theme" as userCreatedRecipesPage;
 
 // Define app-wide typography styles
 $typography-config: mat.define-typography-config(
@@ -198,6 +200,8 @@ $light-theme: mat.define-light-theme((
 @include recipeTablePage.theme($light-theme);
 @include userSidebarContent.theme($light-theme);
 @include popup.theme($light-theme);
+@include editRecipePage.theme($light-theme);
+@include userCreatedRecipesPage.theme($light-theme);
 
 // Apply a dark theme when .dark-theme is applied to the body
 .dark-theme {

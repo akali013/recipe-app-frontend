@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
+import { Recipe } from 'src/app/_models/recipe';
+import { AccountService } from 'src/app/_services/account.service';
+import { RecipeService } from 'src/app/_services/recipe.service';
 
 @Component({
   selector: 'app-sidebar-content',
@@ -10,6 +13,7 @@ import { Router } from '@angular/router';
 export class SidebarContentComponent implements OnInit {
   // Accept the sidenav object from the user layout to close it when the user switches pages
   @Input() sidebar!: MatSidenav;
+  userRecipes: Recipe[] = [];
 
   constructor(private router: Router) { }
 

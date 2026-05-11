@@ -1,18 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Recipe } from 'src/app/_models/recipe';
+import { AccountService } from 'src/app/_services/account.service';
 import { HeaderService } from 'src/app/_services/header.service';
 import { PopupService } from 'src/app/_services/popup.service';
 import { RecipeService } from 'src/app/_services/recipe.service';
 
 @Component({
-  selector: 'app-admin-recipe-details',
-  templateUrl: './admin-recipe-details.component.html',
-  styleUrls: ['./admin-recipe-details.component.css', "./_admin-recipe-details-theme.scss"]
+  selector: 'app-edit-recipe-page',
+  templateUrl: './edit-recipe-page.component.html',
+  styleUrls: ['./edit-recipe-page.component.css', "./_edit-recipe-page-theme.scss"]
 })
-export class AdminRecipeDetailsComponent implements OnInit {
+export class EditRecipePageComponent implements OnInit {
   selectedRecipe?: Recipe   // Recipe for the current page
   isLoading: boolean = true;
   blobUrl = "";     // Placeholder URL for a recipe image to be converted into a SafeUrl
@@ -26,7 +27,6 @@ export class AdminRecipeDetailsComponent implements OnInit {
     // Ingredients and instructions are form arrays so they can have as many form controls as needed
     ingredients: this.fb.array([]),
     instructions: this.fb.array([]),
-    source: ["", Validators.required],
     imageUrl: [""]      // Images are not required
   });
 
@@ -55,13 +55,15 @@ export class AdminRecipeDetailsComponent implements OnInit {
     return this.recipeForm.get("imageUrl") as FormControl;
   }
 
+
   constructor(
     private fb: FormBuilder,
+    private headerService: HeaderService,
     private recipeService: RecipeService,
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
-    private headerService: HeaderService,
-    private popupService: PopupService
+    private popupService: PopupService,
+    private accountService: AccountService
   ) { }
 
   ngOnInit(): void {
@@ -76,7 +78,6 @@ export class AdminRecipeDetailsComponent implements OnInit {
       // Initialize form values
       this.name.setValue(this.selectedRecipe.name);
       this.type.setValue(this.selectedRecipe.type);
-      this.source.setValue(this.selectedRecipe.source);
       this.imageUrl.setValue(this.selectedRecipe.imageUrl);
       // Push new form controls (inputs) for each ingredient and instruction
       this.selectedRecipe.ingredients.map(ingredient => {
@@ -164,10 +165,6 @@ export class AdminRecipeDetailsComponent implements OnInit {
       return;
     }
 
-    if (this.source.value === "") {
-      this.showErrorPopup("Recipe source is required.");
-      return;
-    }
     this.recipeData.set("id", this.selectedRecipe?.id!);
     this.recipeData.set("name", this.name.value);
     this.recipeData.set("type", this.type.value);
@@ -179,7 +176,7 @@ export class AdminRecipeDetailsComponent implements OnInit {
     this.instructions.value.forEach((instruction: string) => {
       this.recipeData.append("instructions", instruction);
     });
-    this.recipeData.set("source", this.source.value);
+    this.recipeData.set("source", this.accountService.accountValue?.id!);
     this.recipeData.set("imageUrl", this.imageUrl.value);
 
     this.recipeService.updateRecipe(this.selectedRecipe?.id!, this.recipeData).subscribe(() => {

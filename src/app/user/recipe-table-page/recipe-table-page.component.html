@@ -42,15 +42,18 @@
 
 <h2 *ngIf="recentRecipes.length > 0">Recently Viewed Recipes</h2>
 <div class="recent-recipes-container" role="group">
-  <mat-card class="recent-recipe-card" tabindex="0" *ngFor="let recipe of recentRecipes">
+  <mat-card class="recent-recipe-card" tabindex="0" *ngFor="let recipe of recentRecipes.reverse()">
 
-    <img mat-card-image class="card-image" [src]="recipe.imageUrl" alt="{{recipe.name}} recipe image" />
+    <div class="card-image-container">
+      <img mat-card-image class="card-image" [src]="getRecentRecipeImageUrl(recipe)" alt="{{recipe.name}} recipe image" />
+    </div>
+    
     <mat-card-title class="card-title">{{recipe.name}}</mat-card-title>
     <mat-card-subtitle>{{recipe.type}}</mat-card-subtitle>
 
     <mat-card-actions align="end">
-      <button class="card-button">
-        <img src="../../../assets/view.png" alt="View {{recipe.name}} recipe" class="card-button-icon" (click)="inspectRecipe(recipe)" (keydown)="inspectRecipe(recipe, $event)"/> 
+      <button class="card-button" (click)="inspectRecipe(recipe)" (keydown)="inspectRecipe(recipe, $event)">
+        <img src="../../../assets/view.png" alt="View {{recipe.name}} recipe" class="card-button-icon" /> 
       </button>
       <button class="card-button" (click)="removeRecentRecipe(recipe)">
         <img src="../../../assets/remove.png" alt="Remove {{recipe.name}} from recent recipes" class="card-button-icon" />
