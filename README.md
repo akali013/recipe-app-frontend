@@ -21,9 +21,7 @@ This app helps the user conveniently find recipes, reference them for later, and
 ### Authentication
 - A user can create an account and log into the app with that account.
 - The first created account is automatically an admin account.
-### Settings
-- Users and admins can change their account's email and password.
-- Users can view, edit, and remove their published recipes.
+- Users and admins can change their account's email and password in the settings page.
 ### Admin Features
 - Admins can view, search, edit, and delete recipes from the recipes table page.
 - Admins can view, search, ban/unban, and edit user accounts from the users table page.
